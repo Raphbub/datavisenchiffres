@@ -20,7 +20,7 @@ Le travail est réalisé à l'aide de [D3.js](https://d3js.org/), une librairie 
 
 ### Sources et ressources
 
-
+L'idée de la page d'accueil vient de la "galerie" D3 visible sur [Observable](https://observablehq.com/@d3/gallery).
 
 ### Contexte de développement
 
