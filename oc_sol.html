@@ -1,28 +1,135 @@
 <!DOCTYPE html>
 <head>
     <title>Occupation du sol</title>
+    <script src="libs/d3.v7.js"></script>
 </head>
 <body>
-    
+<h3>Utilisation du sol et surfaces agricoles utiles</h3>    
 
 <div id="container"></div>
-<script src="libs/d3.v7.js"></script>
-<script type="module">
+<!-- <script type="module"> -->
+<script>
 
-// Declare the chart dimensions and margins.
-const width = 640;
-const height = 400;
-const marginTop = 20;
-const marginRight = 20;
-const marginBottom = 30;
-const marginLeft = 40;
+// Généré avec l'aide de ChatGPT4.0, "How can I make sure, using Promise, that
+// two datasets are loading before the rest of the code is executed ?"
+Promise.all([
+    d3.csv("data/graph_oc_sol.csv", d => {
+        // Les données sont au format
+        // "oc_sol","ha","pct"
+        // "Surfaces improductives",277574,53.1
+        return {
+            oc_sol: d.oc_sol,
+            ha: +d.ha
+        };
+    }),
+    d3.csv("data/graph_sau.csv", d => {
+        // Les données sont au format
+        // "sau","surf_ha","part_rel"
+        // "Prairies naturelles",26603.4,73.3
+        return {
+            oc_sol: "Surfaces agricoles", // Les SAU sont des surfaces agricoles
+            sau: d.sau,
+            ha: +d.surf_ha
+        };
+    })
+]).then(([data_ocsol, data_sau]) => {
+    console.log(data_ocsol);
+    console.log(data_sau);
 
+    // Dimensions et marges
+    const marginTop = 0;
+    const marginRight = 50;
+    const marginBottom = 40;
+    const marginLeft = 75;
+    const width = 940 - marginLeft - marginRight;
+    const height = 500 - marginTop - marginBottom;
 
+      // Container svg
+    const svg = d3.select("#container")
+                  .append("svg")
+                  .attr("title", "Utilisation sol")
+                  .attr("width", width + marginLeft + marginRight)
+                  .attr("height", height + marginTop + marginBottom)
+                  .append("g")
+                  .attr("transform", `translate(${marginLeft},${marginTop})`);
 
-// Append the SVG element.
-container.append(svg.node());
+    // Pour faire un treemap, il faut des données hiérarchiques
+    // Ici on ajoute les sau (sub) comme enfants des surf agricoles (cat)
+    // (https://observablehq.com/@d3/treemap/)
+    const data_nested = data_ocsol.map(cat => {
+        if (cat.oc_sol === "Surfaces agricoles") {
+            const children = data_sau.map(sub => ({
+                oc_sol: sub.sau,
+                ha: sub.ha
+            }));
+            return { ...cat, children };
+        } else {
+            return { ...cat, children: [] };
+        }
+    })
+    
+    // On crée ensuite la hiérarchie, triée sur la base de l'aire en ha
+    // const root = d3.hierarchy({ children: data_nested })
+    //     .sum(d => d.ha)
+    //     .sort((a, b) => b.value - a.value);
+    // Généré par ChatGPT4.0 pour résoudre le problème du total où les 
+    // hectares du sous-niveau étaient comptés à double
+    const root = d3.hierarchy({ children: data_nested })
+    .eachBefore(d => {
+        // Sum up values for nodes without children
+        if (!d.children) {
+            d.value = d.data.ha;
+        }
+    })
+    .eachAfter(d => {
+        // Accumulate the sum of children's values for nodes with children
+        if (d.children) {
+            d.value = d.children.reduce((sum, child) => sum + child.value, 0);
+        }
+    })
+    .sort((a, b) => b.value - a.value);
+
+    // Couleurs des aires
+    surf_colors = {"Surfaces improductives": "#8c80c1", "Surfaces boisées": "#88c946",
+    "Surfaces d'alpages": "#fcaaa6", "Surfaces agricoles": "#ff766f", "Surfaces d'habitat et d'infrastructure" : "#37c4f0"}
+
+    // Définir la treemap
+    const treemap = d3.treemap()
+        .tile(d3.treemapSquarify)
+        .size([width, height])
+        .padding(1)
+        .round(true);
+    
+    // Générer le treemap selon la hiérarchie
+    treemap(root)
+    
+    // Ajouter les noeuds pour accueillir les rects
+    const nodes = svg.selectAll(".node")
+        .data(root.leaves())
+        .enter().append("g")
+        .attr("class", "node")
+        .attr("transform", d => `translate(${d.x0},${d.y0})`);
+    
+    // Ajout des rectangles
+    nodes.append("rect")
+        .attr("id", d => d.data.oc_sol)
+        .attr("width", d => d.x1 - d.x0)
+        .attr("height", d => d.y1 - d.y0)
+        .attr("fill", d => {
+            if (d.depth === 2) {
+                return surf_colors["Surfaces agricoles"]
+            } else {
+                return surf_colors[d.data.oc_sol]
+            }
+        });
+
+// TODO : mettre un bord foncé lors de la sélection
+// TODO : tooltip
+// TODO (évtl) : labels, mais compliqué
+
+});
+
 
 </script>
 
-Occupation du sol
 </body>
