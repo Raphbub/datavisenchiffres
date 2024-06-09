@@ -1,28 +1,88 @@
 <!DOCTYPE html>
 <head>
     <title>Chauffage logements</title>
+    <script src="libs/d3.v7.js"></script>
 </head>
 <body>
-    
+<h3>Logements selon la source d'énergie du chauffage</h3>    
 
 <div id="container"></div>
-<script src="libs/d3.v7.js"></script>
-<script type="module">
+<!-- <script type="module"> -->
+<script>
 
-// Declare the chart dimensions and margins.
-const width = 640;
-const height = 400;
-const marginTop = 20;
-const marginRight = 20;
-const marginBottom = 30;
-const marginLeft = 40;
+// Charger les données, les transformer et produire le plot
+d3.csv("data/graph_src_chauffage.csv", d => {
+  // Les données sont au format
+  // "source","a2021","a2022","evol_21_22"
+  // "mazout",106683,100382,-5.9
+  return {
+    source: d.source,
+    a2022: +d.a2022 // Convertir a2022 en nombre
+  };
+}).then(data => {
 
+  // Dimensions et marges
+  const marginTop = 0;
+  const marginRight = 50;
+  const marginBottom = 40;
+  const marginLeft = 75;
+  const width = 840 - marginLeft - marginRight;
+  const height = 500 - marginTop - marginBottom;
 
+  // Container svg
+  const svg = d3.select("#container")
+                  .append("svg")
+                  .attr("title", "Logements")
+                  .attr("width", width + marginLeft + marginRight)
+                  .attr("height", height + marginTop + marginBottom)
+                  .append("g")
+                  .attr("transform", `translate(${marginLeft},${marginTop})`);
 
-// Append the SVG element.
-container.append(svg.node());
+  // Échelles
+  // X (nombre de logements)
+  const x = d3.scaleLinear()
+    .domain([0, d3.max(data, d => d.a2022)])
+    .range([0, width]);
+
+  // Y (Sources d'énergie)
+  const y = d3.scaleBand()
+    .domain(data.map(d => d.source))
+    .range([0, height])
+    .padding(0.1);
+
+  // Ajouter les barres
+  svg.selectAll(".bar")
+    .data(data)
+    .enter().append("g")
+    .attr("transform", d => `translate(0, ${y(d.source)})`)
+    .append("rect")
+    .attr("x", 0)
+    .attr("height", y.bandwidth())
+    .attr("width", 0) // Initialiser à 0 (à gauche)
+    .attr("fill", "#37c4f0")
+    .transition()
+    .duration(1500)
+    .attr("width", d => x(d.a2022)) // Faire augmenter
+
+  // TODO : changer la couleur lors de la sélection
+  // TODO : tooltip
+  // TODO (évtl) : labels dans/hors des barres
+
+  // Axe X
+  svg.append("g")
+  .attr("transform", `translate(0,${height})`)
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+  .style("text-anchor", "middle");
+
+  // Axe Y
+  svg.append("g")
+    .attr("class", "y-axis")
+    .call(d3.axisLeft(y));
+
+});
+
 
 </script>
 
-Chauffage logements
 </body>
