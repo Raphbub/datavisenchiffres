@@ -36,6 +36,8 @@ Le travail est réalisé à l'aide de [D3.js](https://d3js.org/), une librairie 
 
 L'idée de la page d'accueil vient de la "galerie" D3 visible sur [Observable](https://observablehq.com/@d3/gallery).
 
+Les drapeaux pour les exportations sont issus du repos suivant : [https://github.com/fonttools/region-flags](https://github.com/fonttools/region-flags). Les informations complémentaires sont disponibles dans le dossier `/flags`.
+
 ### Contexte de développement
 
 Ce projet a été développé dans le cadre du cours _Visualisation de données_ (SP24) dispensé par Isaac Pante (SLI, Lettres, UNIL).

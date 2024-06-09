@@ -1,28 +1,121 @@
 <!DOCTYPE html>
 <head>
     <title>Exportations</title>
+    <script src="libs/d3.v7.js"></script>
 </head>
 <body>
-    
+<h3>Exportations par pays (mio CHF)</h3>    
 
 <div id="container"></div>
-<script src="libs/d3.v7.js"></script>
-<script type="module">
+<!-- <script type="module"> -->
+<script>
 
-// Declare the chart dimensions and margins.
-const width = 640;
-const height = 400;
-const marginTop = 20;
-const marginRight = 20;
-const marginBottom = 30;
-const marginLeft = 40;
+// Une partie du code a été reprise et adaptée du projet d3-country-bubble-chart
+// de jeffreymorganio (https://github.com/jeffreymorganio/d3-country-bubble-chart/)
+
+// Charger les données, les transformer et produire le plot
+d3.csv("data/graph_export.csv", d => {
+    // Les données sont au format
+    // "LND_ISOC","total","total_mio","taille_adobe"
+    // "DE",1331439154.07,1331,17.5
+    return {
+        paiso : d.LND_ISOC, // ISO du pays
+        total : +d.total_mio
+    }
+}).then(data => {
+
+    console.log(data);
+
+    // Dimensions et marges
+    const marginTop = 40;
+    const marginRight = 50;
+    const marginBottom = 40;
+    const marginLeft = 50;
+    const width = 840 - marginLeft - marginRight;
+    const height = 500 - marginTop - marginBottom;
+
+    // Container svg
+    const svg = d3.select("#container")
+                    .append("svg")
+                    .attr("title", "Nuitées")
+                    .attr("width", width + marginLeft + marginRight)
+                    .attr("height", height + marginTop + marginBottom)
+                    .append("g")
+                    .attr("transform", `translate(${marginLeft},${marginTop})`);
+    
+    // Ajouter les définitions des drapeaux pour pouvoir remplir les cercles
+    addFlagDefinitions()
+
+    // Échelle
+    // Rayon (exports en millions)
+    const rayon = d3.scaleSqrt()
+                    .domain([0, d3.max(data, d => d.total)])
+                    .range([0, 80]);
+    
+    // Ajout des noeuds pour accueillir les bubbles des pays 
+    const nodes = svg.selectAll(".node")
+                     .data(data)
+                     .enter().append("g")
+                     .attr("class", "node");
+
+    // Ajout des cercles aux noeuds
+    nodes.append("circle")
+         .data(data)
+         .attr("class", "flag")
+         .attr("stroke", "darkgray")
+         .attr("stroke-width", 1) // Ajouter un contour
+         .attr("r", 0) // Initialisés à 0
+         .attr("fill", d => `url(#${d.paiso})`) // Remplis avec le drapeau
+    //  BUG ? Certains drapeaux restent blancs ?
 
 
+    // Utiliser une force simulation et définir les forces à appliquer
+    // Sur la base de https://www.d3indepth.com/force-layout/
+    const simulation = d3.forceSimulation(data)
+                         .force("charge", d3.forceManyBody().strength(5))
+                         .force("center", d3.forceCenter(width / 2, height / 2))
+                         .force("collision", d3.forceCollide().radius(d => rayon(d.total) + 1))
+                         .on("tick", ticked);
+    // Définir l'action à chaque itération
+    // Permet que les noeuds soient correctement ajustés au début
+    function ticked() {
+        nodes.attr("transform", d => `translate(${d.x},${d.y})`);
+    }
 
-// Append the SVG element.
-container.append(svg.node());
+    // On fait grandir les drapeaux propotionnellement aux exportations
+    nodes.select("circle")
+         .transition()
+         .duration(2000)
+         .attr("r", d => rayon(d.total));
+
+    // TODO : ajouter un drag ?
+    // TODO : tooltip
+
+    // Repris et adapté de jeffreymorganio (cf. adresse au sommet)
+    // Aspect ratio à revoir je pense (cf. Japon, Canada)
+    function addFlagDefinitions() {
+        var defs = svg.append("defs");
+        defs.selectAll(".flag")
+            .data(data)
+            .enter()
+            .append("pattern")
+            .attr("id", function(d) { return d.paiso; })
+            .attr("class", "flag")
+            .attr("width", "100%")
+            .attr("height", "100%")
+            .attr("patternContentUnits", "objectBoundingBox")
+            .append("image")
+            .attr("width", 1)
+            .attr("height", 1)
+            // xMidYMid: center the image in the circle
+            // slice: scale the image to fill the circle
+            .attr("preserveAspectRatio", "xMidYMid slice")
+            .attr("xlink:href", function(d) {
+                return "flags/region-flags/svg/" + d.paiso + ".svg";
+            });
+    }
+});
 
 </script>
 
-Exportations
 </body>
