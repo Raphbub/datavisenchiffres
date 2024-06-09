@@ -1,0 +1,865 @@
+pays,continent,mois,nuitees
+Suisse,Suisse,janvier,264163
+Suisse,Suisse,fevrier,347821
+Suisse,Suisse,mars,294024
+Suisse,Suisse,avril,178646
+Suisse,Suisse,mai,91895
+Suisse,Suisse,juin,156892
+Suisse,Suisse,juillet,272926
+Suisse,Suisse,aout,276915
+Suisse,Suisse,septembre,219708
+Suisse,Suisse,octobre,183830
+Suisse,Suisse,novembre,87300
+Suisse,Suisse,decembre,198499
+Allemagne,Europe,janvier,22843
+Allemagne,Europe,fevrier,24175
+Allemagne,Europe,mars,35268
+Allemagne,Europe,avril,27748
+Allemagne,Europe,mai,9502
+Allemagne,Europe,juin,23132
+Allemagne,Europe,juillet,41479
+Allemagne,Europe,aout,43813
+Allemagne,Europe,septembre,26031
+Allemagne,Europe,octobre,9815
+Allemagne,Europe,novembre,4742
+Allemagne,Europe,decembre,21060
+France,Europe,janvier,11608
+France,Europe,fevrier,26566
+France,Europe,mars,18121
+France,Europe,avril,8532
+France,Europe,mai,4862
+France,Europe,juin,9864
+France,Europe,juillet,22287
+France,Europe,aout,27107
+France,Europe,septembre,11453
+France,Europe,octobre,7904
+France,Europe,novembre,4517
+France,Europe,decembre,16745
+Italie,Europe,janvier,4215
+Italie,Europe,fevrier,4922
+Italie,Europe,mars,4771
+Italie,Europe,avril,3844
+Italie,Europe,mai,1800
+Italie,Europe,juin,3054
+Italie,Europe,juillet,5780
+Italie,Europe,aout,9465
+Italie,Europe,septembre,3837
+Italie,Europe,octobre,3160
+Italie,Europe,novembre,1730
+Italie,Europe,decembre,5720
+Autriche,Europe,janvier,1071
+Autriche,Europe,fevrier,970
+Autriche,Europe,mars,1513
+Autriche,Europe,avril,1359
+Autriche,Europe,mai,1184
+Autriche,Europe,juin,2375
+Autriche,Europe,juillet,4350
+Autriche,Europe,aout,5761
+Autriche,Europe,septembre,2756
+Autriche,Europe,octobre,877
+Autriche,Europe,novembre,362
+Autriche,Europe,decembre,827
+Royaume-Uni,Europe,janvier,29610
+Royaume-Uni,Europe,fevrier,36474
+Royaume-Uni,Europe,mars,34097
+Royaume-Uni,Europe,avril,21287
+Royaume-Uni,Europe,mai,4475
+Royaume-Uni,Europe,juin,9575
+Royaume-Uni,Europe,juillet,15843
+Royaume-Uni,Europe,aout,16459
+Royaume-Uni,Europe,septembre,11102
+Royaume-Uni,Europe,octobre,4469
+Royaume-Uni,Europe,novembre,2511
+Royaume-Uni,Europe,decembre,24345
+Irlande,Europe,janvier,893
+Irlande,Europe,fevrier,1191
+Irlande,Europe,mars,1143
+Irlande,Europe,avril,633
+Irlande,Europe,mai,179
+Irlande,Europe,juin,464
+Irlande,Europe,juillet,764
+Irlande,Europe,aout,744
+Irlande,Europe,septembre,540
+Irlande,Europe,octobre,259
+Irlande,Europe,novembre,258
+Irlande,Europe,decembre,1121
+Pays-Bas,Europe,janvier,12012
+Pays-Bas,Europe,fevrier,13461
+Pays-Bas,Europe,mars,13243
+Pays-Bas,Europe,avril,5376
+Pays-Bas,Europe,mai,2968
+Pays-Bas,Europe,juin,5124
+Pays-Bas,Europe,juillet,9315
+Pays-Bas,Europe,aout,9727
+Pays-Bas,Europe,septembre,5176
+Pays-Bas,Europe,octobre,3088
+Pays-Bas,Europe,novembre,2053
+Pays-Bas,Europe,decembre,8390
+Belgique,Europe,janvier,6033
+Belgique,Europe,fevrier,13694
+Belgique,Europe,mars,18488
+Belgique,Europe,avril,7748
+Belgique,Europe,mai,1396
+Belgique,Europe,juin,6261
+Belgique,Europe,juillet,22317
+Belgique,Europe,aout,21245
+Belgique,Europe,septembre,4785
+Belgique,Europe,octobre,1156
+Belgique,Europe,novembre,567
+Belgique,Europe,decembre,12702
+Luxembourg,Europe,janvier,2130
+Luxembourg,Europe,fevrier,3619
+Luxembourg,Europe,mars,1226
+Luxembourg,Europe,avril,996
+Luxembourg,Europe,mai,304
+Luxembourg,Europe,juin,291
+Luxembourg,Europe,juillet,499
+Luxembourg,Europe,aout,1090
+Luxembourg,Europe,septembre,424
+Luxembourg,Europe,octobre,104
+Luxembourg,Europe,novembre,81
+Luxembourg,Europe,decembre,1391
+Danemark,Europe,janvier,2099
+Danemark,Europe,fevrier,4381
+Danemark,Europe,mars,2630
+Danemark,Europe,avril,1579
+Danemark,Europe,mai,169
+Danemark,Europe,juin,411
+Danemark,Europe,juillet,2140
+Danemark,Europe,aout,772
+Danemark,Europe,septembre,400
+Danemark,Europe,octobre,251
+Danemark,Europe,novembre,1114
+Danemark,Europe,decembre,1957
+Suède,Europe,janvier,1635
+Suède,Europe,fevrier,3296
+Suède,Europe,mars,5293
+Suède,Europe,avril,1954
+Suède,Europe,mai,416
+Suède,Europe,juin,831
+Suède,Europe,juillet,1878
+Suède,Europe,aout,1052
+Suède,Europe,septembre,859
+Suède,Europe,octobre,597
+Suède,Europe,novembre,380
+Suède,Europe,decembre,1459
+Norvège,Europe,janvier,538
+Norvège,Europe,fevrier,2892
+Norvège,Europe,mars,2591
+Norvège,Europe,avril,1014
+Norvège,Europe,mai,190
+Norvège,Europe,juin,429
+Norvège,Europe,juillet,1919
+Norvège,Europe,aout,1237
+Norvège,Europe,septembre,922
+Norvège,Europe,octobre,517
+Norvège,Europe,novembre,341
+Norvège,Europe,decembre,376
+Finlande,Europe,janvier,713
+Finlande,Europe,fevrier,1226
+Finlande,Europe,mars,1035
+Finlande,Europe,avril,830
+Finlande,Europe,mai,115
+Finlande,Europe,juin,320
+Finlande,Europe,juillet,1272
+Finlande,Europe,aout,869
+Finlande,Europe,septembre,572
+Finlande,Europe,octobre,475
+Finlande,Europe,novembre,235
+Finlande,Europe,decembre,652
+Espagne,Europe,janvier,2842
+Espagne,Europe,fevrier,2585
+Espagne,Europe,mars,1984
+Espagne,Europe,avril,2188
+Espagne,Europe,mai,620
+Espagne,Europe,juin,1203
+Espagne,Europe,juillet,3745
+Espagne,Europe,aout,5102
+Espagne,Europe,septembre,1949
+Espagne,Europe,octobre,1316
+Espagne,Europe,novembre,640
+Espagne,Europe,decembre,3247
+Portugal,Europe,janvier,656
+Portugal,Europe,fevrier,1321
+Portugal,Europe,mars,1288
+Portugal,Europe,avril,945
+Portugal,Europe,mai,233
+Portugal,Europe,juin,402
+Portugal,Europe,juillet,477
+Portugal,Europe,aout,679
+Portugal,Europe,septembre,415
+Portugal,Europe,octobre,395
+Portugal,Europe,novembre,325
+Portugal,Europe,decembre,1292
+Grèce,Europe,janvier,630
+Grèce,Europe,fevrier,395
+Grèce,Europe,mars,827
+Grèce,Europe,avril,144
+Grèce,Europe,mai,59
+Grèce,Europe,juin,109
+Grèce,Europe,juillet,208
+Grèce,Europe,aout,220
+Grèce,Europe,septembre,62
+Grèce,Europe,octobre,50
+Grèce,Europe,novembre,82
+Grèce,Europe,decembre,1168
+Turquie,Europe,janvier,338
+Turquie,Europe,fevrier,348
+Turquie,Europe,mars,276
+Turquie,Europe,avril,36
+Turquie,Europe,mai,30
+Turquie,Europe,juin,110
+Turquie,Europe,juillet,425
+Turquie,Europe,aout,163
+Turquie,Europe,septembre,83
+Turquie,Europe,octobre,83
+Turquie,Europe,novembre,436
+Turquie,Europe,decembre,241
+Autres Europe,Europe,janvier,738
+Autres Europe,Europe,fevrier,1046
+Autres Europe,Europe,mars,421
+Autres Europe,Europe,avril,229
+Autres Europe,Europe,mai,192
+Autres Europe,Europe,juin,130
+Autres Europe,Europe,juillet,431
+Autres Europe,Europe,aout,662
+Autres Europe,Europe,septembre,303
+Autres Europe,Europe,octobre,264
+Autres Europe,Europe,novembre,180
+Autres Europe,Europe,decembre,689
+Liechtenstein,Europe,janvier,123
+Liechtenstein,Europe,fevrier,116
+Liechtenstein,Europe,mars,105
+Liechtenstein,Europe,avril,123
+Liechtenstein,Europe,mai,77
+Liechtenstein,Europe,juin,98
+Liechtenstein,Europe,juillet,190
+Liechtenstein,Europe,aout,218
+Liechtenstein,Europe,septembre,199
+Liechtenstein,Europe,octobre,113
+Liechtenstein,Europe,novembre,50
+Liechtenstein,Europe,decembre,86
+Islande,Europe,janvier,159
+Islande,Europe,fevrier,200
+Islande,Europe,mars,158
+Islande,Europe,avril,170
+Islande,Europe,mai,52
+Islande,Europe,juin,96
+Islande,Europe,juillet,129
+Islande,Europe,aout,171
+Islande,Europe,septembre,246
+Islande,Europe,octobre,35
+Islande,Europe,novembre,16
+Islande,Europe,decembre,44
+Pologne,Europe,janvier,1212
+Pologne,Europe,fevrier,1549
+Pologne,Europe,mars,1000
+Pologne,Europe,avril,668
+Pologne,Europe,mai,329
+Pologne,Europe,juin,764
+Pologne,Europe,juillet,1532
+Pologne,Europe,aout,1412
+Pologne,Europe,septembre,771
+Pologne,Europe,octobre,228
+Pologne,Europe,novembre,236
+Pologne,Europe,decembre,1076
+Hongrie,Europe,janvier,323
+Hongrie,Europe,fevrier,338
+Hongrie,Europe,mars,327
+Hongrie,Europe,avril,179
+Hongrie,Europe,mai,143
+Hongrie,Europe,juin,337
+Hongrie,Europe,juillet,692
+Hongrie,Europe,aout,730
+Hongrie,Europe,septembre,320
+Hongrie,Europe,octobre,174
+Hongrie,Europe,novembre,47
+Hongrie,Europe,decembre,212
+Bélarus,Europe,janvier,60
+Bélarus,Europe,fevrier,65
+Bélarus,Europe,mars,65
+Bélarus,Europe,avril,34
+Bélarus,Europe,mai,6
+Bélarus,Europe,juin,33
+Bélarus,Europe,juillet,30
+Bélarus,Europe,aout,120
+Bélarus,Europe,septembre,49
+Bélarus,Europe,octobre,14
+Bélarus,Europe,novembre,18
+Bélarus,Europe,decembre,29
+Bulgarie,Europe,janvier,122
+Bulgarie,Europe,fevrier,222
+Bulgarie,Europe,mars,136
+Bulgarie,Europe,avril,101
+Bulgarie,Europe,mai,34
+Bulgarie,Europe,juin,65
+Bulgarie,Europe,juillet,350
+Bulgarie,Europe,aout,158
+Bulgarie,Europe,septembre,98
+Bulgarie,Europe,octobre,87
+Bulgarie,Europe,novembre,34
+Bulgarie,Europe,decembre,239
+Malte,Europe,janvier,59
+Malte,Europe,fevrier,119
+Malte,Europe,mars,62
+Malte,Europe,avril,79
+Malte,Europe,mai,17
+Malte,Europe,juin,55
+Malte,Europe,juillet,97
+Malte,Europe,aout,43
+Malte,Europe,septembre,63
+Malte,Europe,octobre,10
+Malte,Europe,novembre,17
+Malte,Europe,decembre,108
+Chypre,Europe,janvier,424
+Chypre,Europe,fevrier,163
+Chypre,Europe,mars,190
+Chypre,Europe,avril,150
+Chypre,Europe,mai,6
+Chypre,Europe,juin,24
+Chypre,Europe,juillet,95
+Chypre,Europe,aout,154
+Chypre,Europe,septembre,8
+Chypre,Europe,octobre,17
+Chypre,Europe,novembre,12
+Chypre,Europe,decembre,578
+Chili,Amérique du Sud et centrale,janvier,533
+Chili,Amérique du Sud et centrale,fevrier,56
+Chili,Amérique du Sud et centrale,mars,67
+Chili,Amérique du Sud et centrale,avril,60
+Chili,Amérique du Sud et centrale,mai,40
+Chili,Amérique du Sud et centrale,juin,26
+Chili,Amérique du Sud et centrale,juillet,244
+Chili,Amérique du Sud et centrale,aout,54
+Chili,Amérique du Sud et centrale,septembre,130
+Chili,Amérique du Sud et centrale,octobre,41
+Chili,Amérique du Sud et centrale,novembre,21
+Chili,Amérique du Sud et centrale,decembre,155
+États-Unis,Amérique du Nord,janvier,12888
+États-Unis,Amérique du Nord,fevrier,15964
+États-Unis,Amérique du Nord,mars,19601
+États-Unis,Amérique du Nord,avril,6829
+États-Unis,Amérique du Nord,mai,8680
+États-Unis,Amérique du Nord,juin,20762
+États-Unis,Amérique du Nord,juillet,33183
+États-Unis,Amérique du Nord,aout,30835
+États-Unis,Amérique du Nord,septembre,28599
+États-Unis,Amérique du Nord,octobre,10179
+États-Unis,Amérique du Nord,novembre,4520
+États-Unis,Amérique du Nord,decembre,27837
+Canada,Amérique du Nord,janvier,773
+Canada,Amérique du Nord,fevrier,1221
+Canada,Amérique du Nord,mars,2664
+Canada,Amérique du Nord,avril,704
+Canada,Amérique du Nord,mai,587
+Canada,Amérique du Nord,juin,1509
+Canada,Amérique du Nord,juillet,2891
+Canada,Amérique du Nord,aout,3797
+Canada,Amérique du Nord,septembre,2936
+Canada,Amérique du Nord,octobre,1454
+Canada,Amérique du Nord,novembre,570
+Canada,Amérique du Nord,decembre,1893
+Mexique,Amérique du Sud et centrale,janvier,469
+Mexique,Amérique du Sud et centrale,fevrier,431
+Mexique,Amérique du Sud et centrale,mars,332
+Mexique,Amérique du Sud et centrale,avril,411
+Mexique,Amérique du Sud et centrale,mai,97
+Mexique,Amérique du Sud et centrale,juin,175
+Mexique,Amérique du Sud et centrale,juillet,335
+Mexique,Amérique du Sud et centrale,aout,448
+Mexique,Amérique du Sud et centrale,septembre,300
+Mexique,Amérique du Sud et centrale,octobre,272
+Mexique,Amérique du Sud et centrale,novembre,181
+Mexique,Amérique du Sud et centrale,decembre,775
+Brésil,Amérique du Sud et centrale,janvier,5545
+Brésil,Amérique du Sud et centrale,fevrier,2188
+Brésil,Amérique du Sud et centrale,mars,2006
+Brésil,Amérique du Sud et centrale,avril,768
+Brésil,Amérique du Sud et centrale,mai,520
+Brésil,Amérique du Sud et centrale,juin,776
+Brésil,Amérique du Sud et centrale,juillet,924
+Brésil,Amérique du Sud et centrale,aout,733
+Brésil,Amérique du Sud et centrale,septembre,792
+Brésil,Amérique du Sud et centrale,octobre,634
+Brésil,Amérique du Sud et centrale,novembre,641
+Brésil,Amérique du Sud et centrale,decembre,2195
+Argentine,Amérique du Sud et centrale,janvier,265
+Argentine,Amérique du Sud et centrale,fevrier,193
+Argentine,Amérique du Sud et centrale,mars,265
+Argentine,Amérique du Sud et centrale,avril,82
+Argentine,Amérique du Sud et centrale,mai,41
+Argentine,Amérique du Sud et centrale,juin,62
+Argentine,Amérique du Sud et centrale,juillet,183
+Argentine,Amérique du Sud et centrale,aout,87
+Argentine,Amérique du Sud et centrale,septembre,108
+Argentine,Amérique du Sud et centrale,octobre,85
+Argentine,Amérique du Sud et centrale,novembre,31
+Argentine,Amérique du Sud et centrale,decembre,136
+Autres Amérique du Sud,Amérique du Sud et centrale,janvier,1603
+Autres Amérique du Sud,Amérique du Sud et centrale,fevrier,457
+Autres Amérique du Sud,Amérique du Sud et centrale,mars,141
+Autres Amérique du Sud,Amérique du Sud et centrale,avril,290
+Autres Amérique du Sud,Amérique du Sud et centrale,mai,83
+Autres Amérique du Sud,Amérique du Sud et centrale,juin,186
+Autres Amérique du Sud,Amérique du Sud et centrale,juillet,339
+Autres Amérique du Sud,Amérique du Sud et centrale,aout,236
+Autres Amérique du Sud,Amérique du Sud et centrale,septembre,210
+Autres Amérique du Sud,Amérique du Sud et centrale,octobre,183
+Autres Amérique du Sud,Amérique du Sud et centrale,novembre,78
+Autres Amérique du Sud,Amérique du Sud et centrale,decembre,398
+"Autres Amérique centrale, Caraïbes",Amérique du Sud et centrale,janvier,325
+"Autres Amérique centrale, Caraïbes",Amérique du Sud et centrale,fevrier,231
+"Autres Amérique centrale, Caraïbes",Amérique du Sud et centrale,mars,174
+"Autres Amérique centrale, Caraïbes",Amérique du Sud et centrale,avril,321
+"Autres Amérique centrale, Caraïbes",Amérique du Sud et centrale,mai,75
+"Autres Amérique centrale, Caraïbes",Amérique du Sud et centrale,juin,207
+"Autres Amérique centrale, Caraïbes",Amérique du Sud et centrale,juillet,352
+"Autres Amérique centrale, Caraïbes",Amérique du Sud et centrale,aout,282
+"Autres Amérique centrale, Caraïbes",Amérique du Sud et centrale,septembre,360
+"Autres Amérique centrale, Caraïbes",Amérique du Sud et centrale,octobre,217
+"Autres Amérique centrale, Caraïbes",Amérique du Sud et centrale,novembre,98
+"Autres Amérique centrale, Caraïbes",Amérique du Sud et centrale,decembre,479
+Égypte,Afrique,janvier,204
+Égypte,Afrique,fevrier,62
+Égypte,Afrique,mars,89
+Égypte,Afrique,avril,6
+Égypte,Afrique,mai,10
+Égypte,Afrique,juin,63
+Égypte,Afrique,juillet,86
+Égypte,Afrique,aout,68
+Égypte,Afrique,septembre,47
+Égypte,Afrique,octobre,25
+Égypte,Afrique,novembre,4
+Égypte,Afrique,decembre,700
+Autres Afrique du Nord,Afrique,janvier,20
+Autres Afrique du Nord,Afrique,fevrier,239
+Autres Afrique du Nord,Afrique,mars,124
+Autres Afrique du Nord,Afrique,avril,79
+Autres Afrique du Nord,Afrique,mai,21
+Autres Afrique du Nord,Afrique,juin,38
+Autres Afrique du Nord,Afrique,juillet,80
+Autres Afrique du Nord,Afrique,aout,149
+Autres Afrique du Nord,Afrique,septembre,38
+Autres Afrique du Nord,Afrique,octobre,63
+Autres Afrique du Nord,Afrique,novembre,56
+Autres Afrique du Nord,Afrique,decembre,240
+Afrique du Sud,Afrique,janvier,88
+Afrique du Sud,Afrique,fevrier,254
+Afrique du Sud,Afrique,mars,693
+Afrique du Sud,Afrique,avril,169
+Afrique du Sud,Afrique,mai,89
+Afrique du Sud,Afrique,juin,73
+Afrique du Sud,Afrique,juillet,166
+Afrique du Sud,Afrique,aout,223
+Afrique du Sud,Afrique,septembre,114
+Afrique du Sud,Afrique,octobre,80
+Afrique du Sud,Afrique,novembre,65
+Afrique du Sud,Afrique,decembre,643
+Autres Afrique,Afrique,janvier,156
+Autres Afrique,Afrique,fevrier,174
+Autres Afrique,Afrique,mars,188
+Autres Afrique,Afrique,avril,75
+Autres Afrique,Afrique,mai,77
+Autres Afrique,Afrique,juin,62
+Autres Afrique,Afrique,juillet,313
+Autres Afrique,Afrique,aout,163
+Autres Afrique,Afrique,septembre,297
+Autres Afrique,Afrique,octobre,95
+Autres Afrique,Afrique,novembre,23
+Autres Afrique,Afrique,decembre,432
+Bahreïn,Asie,janvier,26
+Bahreïn,Asie,fevrier,30
+Bahreïn,Asie,mars,20
+Bahreïn,Asie,avril,1
+Bahreïn,Asie,mai,16
+Bahreïn,Asie,juin,5
+Bahreïn,Asie,juillet,56
+Bahreïn,Asie,aout,102
+Bahreïn,Asie,septembre,28
+Bahreïn,Asie,octobre,37
+Bahreïn,Asie,novembre,10
+Bahreïn,Asie,decembre,141
+Israël,Asie,janvier,235
+Israël,Asie,fevrier,819
+Israël,Asie,mars,1075
+Israël,Asie,avril,697
+Israël,Asie,mai,188
+Israël,Asie,juin,645
+Israël,Asie,juillet,2091
+Israël,Asie,aout,2752
+Israël,Asie,septembre,1504
+Israël,Asie,octobre,455
+Israël,Asie,novembre,116
+Israël,Asie,decembre,1073
+Inde,Asie,janvier,261
+Inde,Asie,fevrier,273
+Inde,Asie,mars,880
+Inde,Asie,avril,1351
+Inde,Asie,mai,3321
+Inde,Asie,juin,3956
+Inde,Asie,juillet,3266
+Inde,Asie,aout,1644
+Inde,Asie,septembre,1566
+Inde,Asie,octobre,1211
+Inde,Asie,novembre,425
+Inde,Asie,decembre,1732
+Japon,Asie,janvier,75
+Japon,Asie,fevrier,104
+Japon,Asie,mars,256
+Japon,Asie,avril,225
+Japon,Asie,mai,136
+Japon,Asie,juin,662
+Japon,Asie,juillet,1589
+Japon,Asie,aout,1848
+Japon,Asie,septembre,1443
+Japon,Asie,octobre,643
+Japon,Asie,novembre,172
+Japon,Asie,decembre,548
+Autres Asie de l'Est,Asie,janvier,436
+Autres Asie de l'Est,Asie,fevrier,206
+Autres Asie de l'Est,Asie,mars,262
+Autres Asie de l'Est,Asie,avril,243
+Autres Asie de l'Est,Asie,mai,174
+Autres Asie de l'Est,Asie,juin,704
+Autres Asie de l'Est,Asie,juillet,852
+Autres Asie de l'Est,Asie,aout,1019
+Autres Asie de l'Est,Asie,septembre,393
+Autres Asie de l'Est,Asie,octobre,648
+Autres Asie de l'Est,Asie,novembre,127
+Autres Asie de l'Est,Asie,decembre,691
+Qatar,Asie,janvier,28
+Qatar,Asie,fevrier,118
+Qatar,Asie,mars,197
+Qatar,Asie,avril,26
+Qatar,Asie,mai,58
+Qatar,Asie,juin,322
+Qatar,Asie,juillet,379
+Qatar,Asie,aout,119
+Qatar,Asie,septembre,48
+Qatar,Asie,octobre,24
+Qatar,Asie,novembre,11
+Qatar,Asie,decembre,170
+Koweït,Asie,janvier,114
+Koweït,Asie,fevrier,532
+Koweït,Asie,mars,587
+Koweït,Asie,avril,31
+Koweït,Asie,mai,60
+Koweït,Asie,juin,192
+Koweït,Asie,juillet,1679
+Koweït,Asie,aout,1297
+Koweït,Asie,septembre,213
+Koweït,Asie,octobre,33
+Koweït,Asie,novembre,14
+Koweït,Asie,decembre,1642
+Australie,Océanie,janvier,1072
+Australie,Océanie,fevrier,760
+Australie,Océanie,mars,932
+Australie,Océanie,avril,658
+Australie,Océanie,mai,440
+Australie,Océanie,juin,1027
+Australie,Océanie,juillet,1914
+Australie,Océanie,aout,1603
+Australie,Océanie,septembre,1771
+Australie,Océanie,octobre,1176
+Australie,Océanie,novembre,573
+Australie,Océanie,decembre,5311
+Chine,Asie,janvier,331
+Chine,Asie,fevrier,273
+Chine,Asie,mars,382
+Chine,Asie,avril,328
+Chine,Asie,mai,280
+Chine,Asie,juin,435
+Chine,Asie,juillet,886
+Chine,Asie,aout,544
+Chine,Asie,septembre,479
+Chine,Asie,octobre,580
+Chine,Asie,novembre,319
+Chine,Asie,decembre,1305
+Hong Kong,Asie,janvier,105
+Hong Kong,Asie,fevrier,132
+Hong Kong,Asie,mars,252
+Hong Kong,Asie,avril,273
+Hong Kong,Asie,mai,183
+Hong Kong,Asie,juin,392
+Hong Kong,Asie,juillet,574
+Hong Kong,Asie,aout,486
+Hong Kong,Asie,septembre,483
+Hong Kong,Asie,octobre,555
+Hong Kong,Asie,novembre,350
+Hong Kong,Asie,decembre,1395
+Indonésie,Asie,janvier,274
+Indonésie,Asie,fevrier,140
+Indonésie,Asie,mars,154
+Indonésie,Asie,avril,270
+Indonésie,Asie,mai,593
+Indonésie,Asie,juin,660
+Indonésie,Asie,juillet,380
+Indonésie,Asie,aout,382
+Indonésie,Asie,septembre,421
+Indonésie,Asie,octobre,862
+Indonésie,Asie,novembre,562
+Indonésie,Asie,decembre,1536
+Corée (Sud),Asie,janvier,139
+Corée (Sud),Asie,fevrier,120
+Corée (Sud),Asie,mars,215
+Corée (Sud),Asie,avril,271
+Corée (Sud),Asie,mai,749
+Corée (Sud),Asie,juin,1471
+Corée (Sud),Asie,juillet,2216
+Corée (Sud),Asie,aout,2667
+Corée (Sud),Asie,septembre,1559
+Corée (Sud),Asie,octobre,1588
+Corée (Sud),Asie,novembre,638
+Corée (Sud),Asie,decembre,737
+Malaisie,Asie,janvier,298
+Malaisie,Asie,fevrier,267
+Malaisie,Asie,mars,384
+Malaisie,Asie,avril,316
+Malaisie,Asie,mai,662
+Malaisie,Asie,juin,662
+Malaisie,Asie,juillet,617
+Malaisie,Asie,aout,527
+Malaisie,Asie,septembre,1253
+Malaisie,Asie,octobre,1658
+Malaisie,Asie,novembre,850
+Malaisie,Asie,decembre,2864
+Philippines,Asie,janvier,60
+Philippines,Asie,fevrier,77
+Philippines,Asie,mars,97
+Philippines,Asie,avril,79
+Philippines,Asie,mai,139
+Philippines,Asie,juin,245
+Philippines,Asie,juillet,221
+Philippines,Asie,aout,146
+Philippines,Asie,septembre,167
+Philippines,Asie,octobre,334
+Philippines,Asie,novembre,124
+Philippines,Asie,decembre,471
+"Nouvelle Zélande, Océanie",Océanie,janvier,112
+"Nouvelle Zélande, Océanie",Océanie,fevrier,67
+"Nouvelle Zélande, Océanie",Océanie,mars,54
+"Nouvelle Zélande, Océanie",Océanie,avril,50
+"Nouvelle Zélande, Océanie",Océanie,mai,39
+"Nouvelle Zélande, Océanie",Océanie,juin,106
+"Nouvelle Zélande, Océanie",Océanie,juillet,160
+"Nouvelle Zélande, Océanie",Océanie,aout,154
+"Nouvelle Zélande, Océanie",Océanie,septembre,146
+"Nouvelle Zélande, Océanie",Océanie,octobre,84
+"Nouvelle Zélande, Océanie",Océanie,novembre,23
+"Nouvelle Zélande, Océanie",Océanie,decembre,334
+Singapour,Asie,janvier,1169
+Singapour,Asie,fevrier,894
+Singapour,Asie,mars,1285
+Singapour,Asie,avril,1406
+Singapour,Asie,mai,1616
+Singapour,Asie,juin,2427
+Singapour,Asie,juillet,1742
+Singapour,Asie,aout,1032
+Singapour,Asie,septembre,1550
+Singapour,Asie,octobre,2269
+Singapour,Asie,novembre,1932
+Singapour,Asie,decembre,6942
+Oman,Asie,janvier,21
+Oman,Asie,fevrier,0
+Oman,Asie,mars,16
+Oman,Asie,avril,0
+Oman,Asie,mai,13
+Oman,Asie,juin,16
+Oman,Asie,juillet,99
+Oman,Asie,aout,22
+Oman,Asie,septembre,16
+Oman,Asie,octobre,6
+Oman,Asie,novembre,10
+Oman,Asie,decembre,20
+Taïwan (Taipei chinois),Asie,janvier,42
+Taïwan (Taipei chinois),Asie,fevrier,47
+Taïwan (Taipei chinois),Asie,mars,49
+Taïwan (Taipei chinois),Asie,avril,266
+Taïwan (Taipei chinois),Asie,mai,107
+Taïwan (Taipei chinois),Asie,juin,347
+Taïwan (Taipei chinois),Asie,juillet,418
+Taïwan (Taipei chinois),Asie,aout,546
+Taïwan (Taipei chinois),Asie,septembre,628
+Taïwan (Taipei chinois),Asie,octobre,597
+Taïwan (Taipei chinois),Asie,novembre,338
+Taïwan (Taipei chinois),Asie,decembre,1018
+Thaïlande,Asie,janvier,579
+Thaïlande,Asie,fevrier,649
+Thaïlande,Asie,mars,949
+Thaïlande,Asie,avril,2695
+Thaïlande,Asie,mai,1467
+Thaïlande,Asie,juin,1881
+Thaïlande,Asie,juillet,2237
+Thaïlande,Asie,aout,1224
+Thaïlande,Asie,septembre,1456
+Thaïlande,Asie,octobre,4438
+Thaïlande,Asie,novembre,1340
+Thaïlande,Asie,decembre,2723
+Autres Asie de l'Ouest,Asie,janvier,320
+Autres Asie de l'Ouest,Asie,fevrier,300
+Autres Asie de l'Ouest,Asie,mars,797
+Autres Asie de l'Ouest,Asie,avril,105
+Autres Asie de l'Ouest,Asie,mai,49
+Autres Asie de l'Ouest,Asie,juin,63
+Autres Asie de l'Ouest,Asie,juillet,328
+Autres Asie de l'Ouest,Asie,aout,196
+Autres Asie de l'Ouest,Asie,septembre,125
+Autres Asie de l'Ouest,Asie,octobre,61
+Autres Asie de l'Ouest,Asie,novembre,45
+Autres Asie de l'Ouest,Asie,decembre,234
+Estonie,Europe,janvier,195
+Estonie,Europe,fevrier,194
+Estonie,Europe,mars,407
+Estonie,Europe,avril,68
+Estonie,Europe,mai,16
+Estonie,Europe,juin,76
+Estonie,Europe,juillet,176
+Estonie,Europe,aout,104
+Estonie,Europe,septembre,31
+Estonie,Europe,octobre,9
+Estonie,Europe,novembre,11
+Estonie,Europe,decembre,108
+Lettonie,Europe,janvier,159
+Lettonie,Europe,fevrier,179
+Lettonie,Europe,mars,240
+Lettonie,Europe,avril,82
+Lettonie,Europe,mai,36
+Lettonie,Europe,juin,62
+Lettonie,Europe,juillet,87
+Lettonie,Europe,aout,149
+Lettonie,Europe,septembre,79
+Lettonie,Europe,octobre,63
+Lettonie,Europe,novembre,31
+Lettonie,Europe,decembre,187
+Lituanie,Europe,janvier,522
+Lituanie,Europe,fevrier,250
+Lituanie,Europe,mars,367
+Lituanie,Europe,avril,135
+Lituanie,Europe,mai,18
+Lituanie,Europe,juin,44
+Lituanie,Europe,juillet,161
+Lituanie,Europe,aout,203
+Lituanie,Europe,septembre,45
+Lituanie,Europe,octobre,39
+Lituanie,Europe,novembre,22
+Lituanie,Europe,decembre,239
+Arabie saoudite,Asie,janvier,593
+Arabie saoudite,Asie,fevrier,968
+Arabie saoudite,Asie,mars,420
+Arabie saoudite,Asie,avril,69
+Arabie saoudite,Asie,mai,129
+Arabie saoudite,Asie,juin,173
+Arabie saoudite,Asie,juillet,2055
+Arabie saoudite,Asie,aout,1414
+Arabie saoudite,Asie,septembre,201
+Arabie saoudite,Asie,octobre,608
+Arabie saoudite,Asie,novembre,117
+Arabie saoudite,Asie,decembre,1638
+Émirats arabes unis,Asie,janvier,633
+Émirats arabes unis,Asie,fevrier,1068
+Émirats arabes unis,Asie,mars,2328
+Émirats arabes unis,Asie,avril,511
+Émirats arabes unis,Asie,mai,396
+Émirats arabes unis,Asie,juin,471
+Émirats arabes unis,Asie,juillet,2253
+Émirats arabes unis,Asie,aout,2774
+Émirats arabes unis,Asie,septembre,367
+Émirats arabes unis,Asie,octobre,1069
+Émirats arabes unis,Asie,novembre,307
+Émirats arabes unis,Asie,decembre,1927
+Croatie,Europe,janvier,222
+Croatie,Europe,fevrier,210
+Croatie,Europe,mars,145
+Croatie,Europe,avril,268
+Croatie,Europe,mai,18
+Croatie,Europe,juin,36
+Croatie,Europe,juillet,186
+Croatie,Europe,aout,237
+Croatie,Europe,septembre,89
+Croatie,Europe,octobre,171
+Croatie,Europe,novembre,32
+Croatie,Europe,decembre,495
+Roumanie,Europe,janvier,688
+Roumanie,Europe,fevrier,883
+Roumanie,Europe,mars,518
+Roumanie,Europe,avril,325
+Roumanie,Europe,mai,228
+Roumanie,Europe,juin,249
+Roumanie,Europe,juillet,550
+Roumanie,Europe,aout,849
+Roumanie,Europe,septembre,280
+Roumanie,Europe,octobre,263
+Roumanie,Europe,novembre,388
+Roumanie,Europe,decembre,857
+Russie,Europe,janvier,4214
+Russie,Europe,fevrier,1855
+Russie,Europe,mars,638
+Russie,Europe,avril,334
+Russie,Europe,mai,52
+Russie,Europe,juin,384
+Russie,Europe,juillet,1039
+Russie,Europe,aout,1055
+Russie,Europe,septembre,334
+Russie,Europe,octobre,173
+Russie,Europe,novembre,150
+Russie,Europe,decembre,1972
+Slovaquie,Europe,janvier,159
+Slovaquie,Europe,fevrier,352
+Slovaquie,Europe,mars,277
+Slovaquie,Europe,avril,280
+Slovaquie,Europe,mai,57
+Slovaquie,Europe,juin,253
+Slovaquie,Europe,juillet,232
+Slovaquie,Europe,aout,416
+Slovaquie,Europe,septembre,84
+Slovaquie,Europe,octobre,62
+Slovaquie,Europe,novembre,49
+Slovaquie,Europe,decembre,172
+Slovénie,Europe,janvier,140
+Slovénie,Europe,fevrier,429
+Slovénie,Europe,mars,443
+Slovénie,Europe,avril,85
+Slovénie,Europe,mai,51
+Slovénie,Europe,juin,177
+Slovénie,Europe,juillet,312
+Slovénie,Europe,aout,238
+Slovénie,Europe,septembre,159
+Slovénie,Europe,octobre,120
+Slovénie,Europe,novembre,35
+Slovénie,Europe,decembre,172
+Tchéquie,Europe,janvier,420
+Tchéquie,Europe,fevrier,561
+Tchéquie,Europe,mars,894
+Tchéquie,Europe,avril,651
+Tchéquie,Europe,mai,174
+Tchéquie,Europe,juin,506
+Tchéquie,Europe,juillet,3211
+Tchéquie,Europe,aout,1597
+Tchéquie,Europe,septembre,945
+Tchéquie,Europe,octobre,244
+Tchéquie,Europe,novembre,116
+Tchéquie,Europe,decembre,689
+Ukraine,Europe,janvier,1448
+Ukraine,Europe,fevrier,502
+Ukraine,Europe,mars,117
+Ukraine,Europe,avril,159
+Ukraine,Europe,mai,203
+Ukraine,Europe,juin,127
+Ukraine,Europe,juillet,237
+Ukraine,Europe,aout,381
+Ukraine,Europe,septembre,178
+Ukraine,Europe,octobre,127
+Ukraine,Europe,novembre,118
+Ukraine,Europe,decembre,1014
+Serbie,Europe,janvier,283
+Serbie,Europe,fevrier,203
+Serbie,Europe,mars,87
+Serbie,Europe,avril,70
+Serbie,Europe,mai,9
+Serbie,Europe,juin,19
+Serbie,Europe,juillet,44
+Serbie,Europe,aout,59
+Serbie,Europe,septembre,15
+Serbie,Europe,octobre,49
+Serbie,Europe,novembre,37
+Serbie,Europe,decembre,96

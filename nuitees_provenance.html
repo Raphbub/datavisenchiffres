@@ -1,28 +1,128 @@
 <!DOCTYPE html>
 <head>
     <title>Nuitées selon provenance</title>
+    <script src="libs/d3.v7.js"></script>
 </head>
 <body>
-    
+<h3>Nuitées selon la provenance des hôtes</h3>    
 
 <div id="container"></div>
-<script src="libs/d3.v7.js"></script>
-<script type="module">
+<!-- <script type="module"> -->
+<script>
 
-// Declare the chart dimensions and margins.
-const width = 640;
-const height = 400;
-const marginTop = 20;
-const marginRight = 20;
-const marginBottom = 30;
-const marginLeft = 40;
+// Charger les données, les transformer et produire le plot
+d3.csv("data/graph_nuitees_tidy.csv").then(data => {
 
+  // Les données sont au format
+  // pays,continent,mois,nuitees
+  // Suisse,Suisse,janvier,264163
 
+  // Ajuster le continent en Autres pour les "hors Europe"
+  const data_par_cont = data.map(item => {
+    if (!["Suisse", "Europe"].includes(item.continent)) {
+      // Si le continent n'est pas Suisse ou Europe, le modifier en Autres
+      return { ...item, continent: "Autres" };
+    }
+    return item;
+  });
 
-// Append the SVG element.
-container.append(svg.node());
+  // Grouper par continent
+  const continents_groupes = d3.group(data_par_cont, d => d.continent);
+
+  // On veut, pour chaque continent, la somme par mois
+  let graph_data = [];
+
+  // Itérer sur les groupes de continent
+  for (const [continent, items] of continents_groupes) {
+
+    items.forEach(item => {
+      // Extraire les informations utiles de la ligne/objet
+      // Généré avec l'aide de ChatGPT 3.5 en réponse à 
+      // "In javascript, how can I assign several variable from one object in one line ?"
+      const { continent, mois, nuitees } = item;
+
+      // Trouver si la ligne de résultat existe déjà
+      const rslt_existant = graph_data.find(ligne => ligne.continent === continent && ligne.mois === mois);
+
+      if (rslt_existant) {
+        // Si la ligne existe déjà, ajouter les nuitées au total
+        rslt_existant.nuitees += +nuitees;
+      } else {
+        // Si elle n'existe pas (undefined), l'ajouter aux données
+        graph_data.push({ continent, mois, nuitees: +nuitees });
+      }
+    });
+  }
+
+  // Dimensions et marges
+  const marginTop = 40;
+  const marginRight = 50;
+  const marginBottom = 40;
+  const marginLeft = 50;
+  const width = 840 - marginLeft - marginRight;
+  const height = 500 - marginTop - marginBottom;
+
+  // Container svg
+  const svg = d3.select("#container")
+                  .append("svg")
+                  .attr("title", "Nuitées")
+                  .attr("width", width + marginLeft + marginRight)
+                  .attr("height", height + marginTop + marginBottom)
+                  .append("g")
+                  .attr("transform", `translate(${marginLeft},${marginTop})`);
+
+  // Échelles
+  // X (mois)
+  const x = d3.scaleBand()
+    .domain(graph_data.map(d => d.mois))
+    .range([0, width])
+    .padding(0.1);
+
+  // Y (nuitées)
+  const y = d3.scaleLinear()
+    .domain([0, d3.max(graph_data, d => d.nuitees)])
+    .nice()
+    .range([height, 0]);
+    
+  // Ligne (https://observablehq.com/@d3/d3-line)
+  const line = d3.line()
+    .x(d => x(d.mois) + x.bandwidth() / 2)
+    .y(d => y(d.nuitees))
+
+  // Couleurs
+  const cont_colors = {"Suisse" : "#DC0018", "Europe" : "#728cd7", "Autres" : "#8e8e8e"}
+
+  // Faire des groupes pour avoir une ligne par groupe
+  const groupes = d3.groups(graph_data, d => d.continent);
+
+  // Ajouter les lignes
+  svg.selectAll(".line")
+    .data(groupes)
+    .enter().append("path")
+    .attr("class", "line")
+    .attr("d", d => line(d[1])) // d[1] pour avoir les données
+    .style("stroke", d => cont_colors[d[0]]) // d[0] pour le nom de groupe (continent)
+    .style("fill", "none")
+    .style("stroke-width", 2);
+
+  // TODO : faire grandir la ligne
+  // TODO : tooltip
+  // TODO : légende (ligne nommée)
+
+  // Axe X
+  svg.append("g")
+  .attr("transform", `translate(0,${height})`)
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+  .style("text-anchor", "middle");
+
+  // Axe Y
+  svg.append("g")
+    .attr("class", "y-axis")
+    .call(d3.axisLeft(y));
+});
+
 
 </script>
 
-Nuitées selon provenance
 </body>
