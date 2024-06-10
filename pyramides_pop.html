@@ -126,7 +126,8 @@
                .on("mousemove", (e, d) => {
                    const [mx, my] = d3.pointer(e); // Obtenir les coordonnées de la souris
                    tooltip.html(`${sepMilliers(Math.abs(d.nombre))} ${sexeEnToutesLettres(d.sexe)} ${ageEnTexte(d.age)}`)
-                          .style("transform", `translate(${mx + 10}px, ${my + 20}px)`);
+                          .style("left", `${mx + 5}px`)
+                          .style("top", `${my + 50}px`);
                })
                .on("mouseout", (e, d) => {
                    d3.select(e.currentTarget).attr("fill-opacity", 0.8);
