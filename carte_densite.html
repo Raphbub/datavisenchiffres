@@ -2,10 +2,29 @@
 <head>
     <title>Densité de population</title>
     <script src="libs/d3.v7.js"></script>
+    <style>
+        h3 {
+            margin-bottom: 0;
+            margin-left: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        h5 {
+            margin-top: 0px;
+            margin-bottom: 0;
+            margin-left: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .tooltip {
+            font-size: 11px;
+            position: absolute;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
 </head>
 <body>
     
-
+<h3>Densité de population</h3>
+<h5>En habitants par km<sup>2</sup>, 2023</h5>
 <div id="container"></div>
 
 <script type="module">
@@ -26,11 +45,11 @@ const svg = d3.create("svg")
 
 // Ajout des données
 const data = await d3.json("data/carte_com_densite_wgs84.geojson")
-console.log(data);
+
 let projection = d3.geoMercator()
                     .center([7.5806, 46.2653])
                     .scale(15000)
-                    .translate([width / 2.75 , height / 2]);
+                    .translate([width / 2.75 , height / 2.7]);
 let pathG = d3.geoPath()
                 .projection(projection);
 
@@ -51,28 +70,34 @@ svg.selectAll("path")
     })
     .style("stroke", "none")
     .style("stroke-width", 1)
-    .on("mouseout", function() {
-        console.log("HEOH");
-        d3.selectAll("path") 
-            .style("stroke", "none");
-    })
     .on("mouseover", (e,d) => {
         // Ajouter la commune à la fin du svg pour
-        // qu'elle soit dessinée dessus
+        // qu"elle soit dessinée dessus
         event.currentTarget.parentNode.appendChild(event.currentTarget);
+        
         let com = d3.select(e.currentTarget);
         com.attr("z-index", 1000);
-        console.log("HEHO");
-
         com.style("stroke", "black");
+
+        toolt.style("opacity", "1")
     })
-    ;
+    .on("mousemove", function(e,d) {
+        toolt.html(`<b>${d.properties.name}</b><br>${Math.round(d.properties.dens_hab_km2)} habs par km<sup>2</sup>`)
+             .style("left", `${e.pageX + 20}px`)
+             .style("top", `${e.pageY}px`)
+    })
+    .on("mouseout", function() {
+        d3.selectAll("path") 
+          .style("stroke", "none");
+
+        toolt.style("opacity", "0")
+    });
 
     // Généré avec ChatGPT3.5 pour "javascript function to compare two RGB colors"
     function compareRGB(rgb1, rgb2) {
-        // Strip 'rgb()' and split the components
-        const components1 = rgb1.replace(/[^\d,]/g, '').split(',');
-        const components2 = rgb2.replace(/[^\d,]/g, '').split(',');
+        // Strip "rgb()" and split the components
+        const components1 = rgb1.replace(/[^\d,]/g, "").split(",");
+        const components2 = rgb2.replace(/[^\d,]/g, "").split(",");
         
         // Compare each component
         for (let i = 0; i < 3; i++) {
@@ -80,7 +105,6 @@ svg.selectAll("path")
                 return false;
             }
         }
-        
         return true;
     }
 
@@ -98,15 +122,12 @@ svg.selectAll("path")
     }
 
     function dimNonMatchingPolygons(color) {
-        console.log("TOstring");
-        console.log(d3.color(color).formatHex().toUpperCase());
-        // Reset l'opacité
+        // Reset l"opacité
         svg.selectAll("path")
-            .style("fill-opacity", 0.5);
+            .style("fill-opacity", 0.2);
 
         // Mettre en évidence les sélectionnés en étant opaques
         let className = ".polygon-" + (colors.indexOf(d3.color(color).formatHex().toUpperCase()) + 1)
-        console.log(className);
         svg.selectAll("path")
             .filter(className)
             .style("fill-opacity", 1);
@@ -115,8 +136,8 @@ svg.selectAll("path")
 
     // Essais légende
     const legend = svg.append("g")
-        .attr("class", "legend")
-        .attr("transform", "translate(420,250)");
+                      .attr("class", "legend")
+                      .attr("transform", "translate(420,150)");
     
     // Dimensions et espacement
     const rectWidth = 20;
@@ -124,57 +145,64 @@ svg.selectAll("path")
     const spacing = 5;
 
     // Prépare les carrés de la légende
-    legend.selectAll('rect')
-        .data(colors)
-        .enter().append('rect')
-        .attr('x', 0)
-        .attr('y', (d, i) => i * (rectHeight + spacing))
-        .attr('width', rectWidth)
-        .attr('height', rectHeight)
-        .style('fill', d => d)
-        .attr("class", function(d) {
-            const rank = colors.indexOf(d) + 1;
-            return `rect-${rank}`;
-        })
-        .on("mouseover", function(d) {
-            const color = d3.select(this).style("fill");
-            d3.select(this).style("border", "1px solid") 
-            console.log(color);
-            highlightPolygonsByColor(color);
-            dimNonMatchingPolygons(color);
-        })
-        .on("mouseout", function() {
-            svg.selectAll("path")
-                .style("stroke", "none")
-                .style("fill-opacity", 1);
-        });
+    legend.selectAll("rect")
+          .data(colors.toReversed())
+          .enter().append("rect")
+          .attr("x", 0)
+          .attr("y", (d, i) => i * (rectHeight + spacing))
+          .attr("width", rectWidth)
+          .attr("height", rectHeight)
+          .style("fill", d => d)
+          .attr("class", function(d) {
+              const rank = colors.indexOf(d) + 1;
+              return `rect-${rank}`;
+          })
+          .on("mouseover", function(e, d) {
+              const color = d3.select(this).style("fill");
+              // Rendre transparents les autres rects de la légende
+              d3.selectAll("rect").filter(function() {
+                  return this !== e.target;
+              }).style("fill-opacity", "0.2");
+              
+              // Mettre en évidence les communes concernées
+              highlightPolygonsByColor(color);
+              dimNonMatchingPolygons(color);
+          })
+          .on("mouseout", function() {
+              // Réinitialiser les communes
+              svg.selectAll("path")
+                  .style("stroke", "none")
+                  .style("fill-opacity", 1);
+              // Réinitialiser la légende
+              d3.selectAll("rect")
+                  .style("fill-opacity", "1");
+          });
 
-    // Test labels
-    const labels = ['Highest', 'Second', 'Third', 'Fourth', 'Fifth', 'Six'];
-    legend.selectAll('text')
+    // Labels légende
+    const labels = ["1023", "713", "363", "218", "106", "46"];
+    legend.selectAll("text")
         .data(labels)
-        .enter().append('text')
-        .attr('x', rectWidth + 5)
-        .attr('y', (d, i) => i * (rectHeight + spacing) + rectHeight / 2)
+        .enter().append("text")
+        .attr("x", rectWidth + 5)
+        .attr("y", (d, i) => i * (rectHeight + spacing) + rectHeight / 3.25)
         .text(d => d)
-        .attr('alignment-baseline', 'middle');
+        .attr("alignment-baseline", "middle")
+        .style("font-size", "12px");
 
 // Si en local
 // 	const data = [
-// {sexe: 'H', age: 0, nombre: 1600},
+// {sexe: "H", age: 0, nombre: 1600},
 // ... coller la suite ici
 // ]
 
 //  Définir le tooltip
-let toolt = d3.select("#container")
-    .append("div")
-    .style("opacity", 0)
-    .attr("class", "tooltip")
-    .style("background-color", "white")
-    .style("position", "absolute")
-    .style("font-size", "12")
-    .style("padding", "2px")
-    .style("border-radius", "5px")
+let toolt = d3.select("body")
+              .append("div")
+              .style("opacity", 0)
+              .attr("class", "tooltip")
+              .style("background-color", "#efefef")
+              .style("padding", "2px")
+              .style("border-radius", "5px")
 
 
 // Append the SVG element.
