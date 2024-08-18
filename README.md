@@ -18,11 +18,11 @@ Le Valais en chiffres est une publication annuelle qui essaie de dresser le port
 
 Le panel de graphiques à choix devient vite réduit si l'on souhaite visualiser principalement des relations de type "magnitude", "part relative à un ensemble", "classement" et "spatial" pour reprendre le _[visual vocabulary](https://raw.githubusercontent.com/Financial-Times/chart-doctor/main/visual-vocabulary/poster.png)_ du _Financial Times_. Il faut pourtant essayer de rendre la publication la plus attractive possible.
 
-Les cartes de [densité](./carte_densite.html) et d'[évolution de la population](./carte_evol_pop.html), le graphique en barres [le nombre de logements selon la source d'énergie](./chauffage_logements.html) et celui en lignes du  nombre de [nuitées selon la provenance des hôtes](./nuitees_provenance.html) sont des grands classiques et devraient facilement parler au public. L'ajout de l'interaction les rends encore plus informatifs avec la possibilité de connaître la valeur précise pour une commune ou un mois donnée. Pour les barres, l'interactivité est uniquement cosmétique.
+Les cartes de [densité](./carte_densite.html) et d'[évolution de la population](./carte_evol_pop.html), le graphique en barres [le nombre de logements selon la source d'énergie](./chauffage_logements.html) et celui en lignes du nombre de [nuitées selon la provenance des hôtes](./nuitees_provenance.html) sont des grands classiques et devraient facilement parler au public. L'ajout de l'interactivité les rends encore plus informatifs avec la possibilité de connaître la valeur précise pour une certaine commune ou un mois donné. Pour les barres, l'interactivité est uniquement cosmétique (animation du début).
 
 La "pyramide" des âges est un type de graphique moins fréquent et a été inclus pour montrer le résultat de la projection démographique réalisée pour le canton du Valais. Là aussi l'interactivité permet de connaître, pour chaque tranche d'âge, les valeurs exactes. On pourrait également penser inclure dans la même visualisation la différence entre la projection et l'état actuel (ou d'autres différences), animer l'évolution sur plusieurs années et ainsi voir la pyramide onduler.
 
-Le graphique de l'[utilisation du sol](./oc_sol.html) est une petite évolution avec l'utilisation plus "classique" (mais assez décriée) du _pie chart_. Ici l'interactivité permet d'inclure les données de l'agriculture directement dans un "sous-treemap" qui pourrait être étendu aux autres grandes catégories (ce que le format de la publication ne permet pas).
+Le graphique de l'[utilisation du sol](./oc_sol.html) est une petite évolution avec l'utilisation plus "classique" (mais assez décriée) du _pie chart_. Ici l'interactivité permet d'inclure les données de l'agriculture directement dans un "sous-treemap" qui pourrait être étendu aux autres grandes catégories (ce que le format A6 de la publication ne permet pas).
 
 Le graphique des [exportations](./exportations.html) permet de voir les partenaires privilégiés au niveau des exportations. Un graphique alternatif aurait été de faire un graphique "de Sankey"/alluvial pour montrer comment se répartissent les plus gros secteurs d'exportations dans les plus grosses destinations d'export. Toutefois, le graphique est vite encombré et les symboles proportionnels sont assez intuitifs (même s'ils demandent de connaître les drapeaux représentés). Là encore, l'interactivité permet d'apporter cette information ainsi qu'un peu d'animation, mais le type de graphique pourrait être intégralement repensé.
 
@@ -36,7 +36,11 @@ Le travail est réalisé à l'aide de [D3.js](https://d3js.org/), une librairie 
 
 L'idée de la page d'accueil vient de la "galerie" D3 visible sur [Observable](https://observablehq.com/@d3/gallery).
 
-Les drapeaux pour les exportations sont issus du repos suivant : [https://github.com/fonttools/region-flags](https://github.com/fonttools/region-flags). Les informations complémentaires sont disponibles dans le dossier `/flags`.
+Les drapeaux pour les exportations sont issus du repo suivant : [https://github.com/fonttools/region-flags](https://github.com/fonttools/region-flags). Les informations complémentaires sont disponibles dans le dossier `/flags`.
+
+### Améliorations potentielles
+
+- Ajouter une échelle aux cartes
 
 ### Contexte de développement
 
