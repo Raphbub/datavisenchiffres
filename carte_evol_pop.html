@@ -1,12 +1,31 @@
 <!DOCTYPE html>
 <head>
     <title>Évolution de la population</title>
+    <script src="libs/d3.v7.js"></script>
+    <style>
+        h3 {
+            margin-bottom: 0;
+            margin-left: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        h5 {
+            margin-top: 5px;
+            margin-bottom: 0;
+            margin-left: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .tooltip {
+            font-size: 11px;
+            position: absolute;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
 </head>
 <body>
     
-
+<h3>Évolution de population dans les districts valaisans</h3>
+<h5>Évolution en pour-cent, de 2021 à 2022</h5>
 <div id="container"></div>
-<script src="libs/d3.v7.js"></script>
 <script type="module">
 
 // Declare the chart dimensions and margins.
@@ -17,12 +36,160 @@ const marginRight = 20;
 const marginBottom = 30;
 const marginLeft = 40;
 
+// Create the SVG container.
+const svg = d3.create("svg")
+              .attr("title", "Carte")
+              .attr("width", width)
+              .attr("height", height);
 
+// Ajout des données
+const data = await d3.json("data/carte_dist_evol_pop_wgs84.geojson")
+
+let projection = d3.geoMercator()
+                   .center([7.5806, 46.2653])
+                   .scale(15000)
+                   .translate([width / 2.75 , height / 2.7]);
+
+let pathG = d3.geoPath()
+              .projection(projection);
+
+const colors = ["#ff9a5e", "#52cdd4", "#2eafbd", "#228390", "#17606a"];
+let colorScale = d3.scaleThreshold()
+                    .domain([-0.35, 0.72, 1.16, 1.74, 2.19])
+                    .range(colors)
+
+svg.selectAll("path")
+    .data(data.features)
+    .enter().append("path")
+    .attr("d", pathG)
+    .style("fill", d => colorScale(d.properties.evol_pop_pct))
+    .attr("class", function(d) {
+        const color = colorScale(d.properties.evol_pop_pct);
+        const rank = colors.indexOf(color) + 1;
+        return `polygon-${rank}`;
+    })
+    .style("stroke", "white")
+    .style("stroke-width", 0.5)
+    .on("mouseover", (e,d) => {
+        // Ajouter le district à la fin du svg pour
+        // qu'il soit dessiné au-dessus
+        event.currentTarget.parentNode.appendChild(event.currentTarget);
+        
+        let com = d3.select(e.currentTarget);
+        com.attr("z-index", 1000);
+        com.style("stroke-width", 1.5);
+
+        toolt.style("opacity", "1")
+    })
+    .on("mousemove", function(e,d) {
+        toolt.html(`<b>${d.properties.name}</b><br>${d.properties.evol_pop_pct.toPrecision(2)} habs par km<sup>2</sup>`)
+             .style("left", `${e.pageX + 20}px`)
+             .style("top", `${e.pageY}px`)
+    })
+    .on("mouseout", function() {
+        d3.selectAll("path") 
+          .style("stroke-width", 0.5);
+
+        toolt.style("opacity", "0")
+    });
+
+// Généré avec ChatGPT3.5 pour "javascript function to compare two RGB colors"
+function compareRGB(rgb1, rgb2) {
+    // Strip "rgb()" and split the components
+    const components1 = rgb1.replace(/[^\d,]/g, "").split(",");
+    const components2 = rgb2.replace(/[^\d,]/g, "").split(",");
+    
+    // Compare each component
+    for (let i = 0; i < 3; i++) {
+        if (parseInt(components1[i]) !== parseInt(components2[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function dimNonMatchingPolygons(classNumber) {
+    // Reset l"opacité
+    svg.selectAll("path")
+        .style("fill-opacity", 0.4);
+
+    // Mettre en évidence les sélectionnés en étant opaques
+    let className = `.polygon-${classNumber}`
+    svg.selectAll("path")
+        .filter(className)
+        .style("fill-opacity", 1);
+}
+
+// Légende
+const legend = svg.append("g")
+                    .attr("class", "legend")
+                    .attr("transform", "translate(420,150)");
+
+// Dimensions et espacement
+const rectWidth = 20;
+const rectHeight = 20;
+const spacing = 5;
+
+// Prépare les carrés de la légende
+legend.selectAll("rect")
+        .data(colors.toReversed())
+        .enter().append("rect")
+        .attr("x", 0)
+        .attr("y", (d, i) => i * (rectHeight + spacing))
+        .attr("width", rectWidth)
+        .attr("height", rectHeight)
+        .style("fill", d => d)
+        .attr("class", function(d) {
+            const rank = colors.indexOf(d) + 1;
+            return `rect-${rank}`;
+        })
+        .on("mouseover", function(e, d) {
+            const color = d3.select(this).style("fill");
+            // Rendre transparents les autres rects de la légende
+            d3.selectAll("rect").filter(function() {
+                return this !== e.target;
+            }).style("fill-opacity", "0.2");
+
+            // Récupérer le numéro de la classe du rect
+            let rectClass = e.target.classList;
+            let classNumber = rectClass[0].match(/\d+/)[0];
+
+            // Mettre en évidence les districts de la classe
+            dimNonMatchingPolygons(classNumber);
+        })
+        .on("mouseout", function() {
+            // Réinitialiser les districts
+            svg.selectAll("path")
+                .style("stroke", "0.5")
+                .style("fill-opacity", 1);
+            // Réinitialiser la légende
+            d3.selectAll("rect")
+                .style("fill-opacity", "1");
+        });
+
+// Labels légende
+const labels = [2.19, 1.74, 1.16, 0.72, -0.35];
+legend.selectAll("text")
+    .data(labels)
+    .enter().append("text")
+    .attr("x", rectWidth + 5)
+    .attr("y", (d, i) => i * (rectHeight + spacing) + rectHeight / 1.25)
+    .text(d => d)
+    .attr("alignment-baseline", "middle")
+    .style("font-size", "12px")
+    .style("font-family", "Arial");
+
+//  Définir le tooltip
+let toolt = d3.select("body")
+              .append("div")
+              .style("opacity", 0)
+              .attr("class", "tooltip")
+              .style("background-color", "#efefef")
+              .style("padding", "2px")
+              .style("border-radius", "5px")
 
 // Append the SVG element.
 container.append(svg.node());
 
 </script>
-
-Évolution de la population
 </body>
