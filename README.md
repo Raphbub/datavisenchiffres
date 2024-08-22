@@ -41,6 +41,7 @@ Les drapeaux pour les exportations sont issus du repo suivant : [https://github.
 ### Améliorations potentielles
 
 - Ajouter une échelle aux cartes
+- L'axe à zéro pour la pyramide des âges
 
 ### Contexte de développement
 
