@@ -8,7 +8,12 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
-   <h3>Structure par âge de la population</h3> 
+    <h3>Structure par âge de la population</h3> 
+    <input type="radio" id="radio2022" name="year" value="2022" checked>
+    <label for="radio2022">2022</label><br>
+
+    <input type="radio" id="radioProjection" name="year" value="2050_moy">
+    <label for="radioProjection">2050, sc. moyen</label><br>
 
     <div id="container"></div>
     <script>
@@ -31,11 +36,11 @@
         // Échelles
         // X
         const x = d3.scaleLinear()
-                    .domain([3000, -3000])
+                    .domain([3500, -3500])
                     .range([0, width]);
         // Y
         const y = d3.scaleBand()
-                    .domain(d3.range(0, 100))
+                    .domain(d3.range(0, 101))
                     .range([height, 0])
                     .padding(0);
         // Couleur
@@ -84,20 +89,90 @@
                        .attr("text-anchor", "start")
                        .text("Âge ↑"));
 
+        
+
         // Charger les données, les transformer et produire le plot
-        d3.dsv(";", "data/graph_pyramide.csv", d => {
-            // Prendre uniquement les données 2020 (22 dans la brochure)
-            if (+d.AN === 2020) {
-                return {
-                    sexe: +d.SEX === 1 ? "H" : "F",
-                    age: +d.AGE,
-                    nombre: +d.SEX === 1 ? +d.pop : -d.pop // Négatif car côté droit
-                };
-            }            
-        }).then(data => {
-            console.log(data);
-            // Tooltip
-            const tooltip = d3.select("#container")
+        d3.dsv(";", "data/graph_pyramide.csv").then(data => {
+            
+            // Dessiner la pyramide avec les données filtrées
+            function updatePyramid(filtData) {
+                
+                // Enlever les barres
+                svg.selectAll("rect").remove();
+
+                // Ajouter les barres de données
+                svg.append("g")
+                .selectAll("rect")
+                .data(filtData)
+                .enter()
+                .append("rect")
+                .attr("fill", d => color(d.sexe))
+                .attr("x", x(0))
+                .attr("y", d => y(d.age))
+                .attr("height", y.bandwidth())
+                .attr("width", 0)
+                .attr("fill-opacity", 0.8)
+                .on("mouseover", (e, d) => {
+                    d3.select(e.currentTarget).attr("fill-opacity", 1);    
+                    tooltip.style("opacity", 1);        
+                })
+                .on("mousemove", (e, d) => {
+                    const [mx, my] = d3.pointer(e); // Obtenir les coordonnées de la souris
+                    tooltip.html(`${sepMilliers(Math.abs(d.nombre))} ${sexeEnToutesLettres(d.sexe)} ${ageEnTexte(d.age)}`)
+                            .style("left", `${mx + 5}px`)
+                            .style("top", `${my + 50}px`);
+                })
+                .on("mouseout", (e, d) => {
+                    d3.select(e.currentTarget).attr("fill-opacity", 0.8);
+                    tooltip.style("opacity", 0); 
+                })
+                .transition()
+                .duration(2000)
+                .attr("width", d => Math.abs(x(d.nombre) - x(0))) // Longueur finale
+                .attr("x", d => x(Math.max(d.nombre, 0))); // Position finale
+
+                // Grille pour l'axe Y
+                svg.append("g")
+                .attr("stroke", "black")
+                .attr("stroke-opacity", 0.1)
+                .call(g => g.append("g")
+                            .selectAll("line")
+                            .data(d3.range(0, 100, 10))
+                            .join("line")
+                            .attr("y1", d => y(d) + y.step() / 2)
+                            .attr("y2", d => y(d) + y.step() / 2)
+                            .attr("x1", 0)
+                            .attr("x2", width));
+
+                // Grille pour l'axe X
+                svg.append("g")
+                .attr("stroke", "white")
+                .attr("stroke-opacity", 0.5)
+                .call(g => g.append("g")
+                            .selectAll("line")
+                            .data(x.ticks().filter((v, i) => v % 1000 == 0).slice(1, -1))
+                            .join("line")
+                            .attr("x1", d => x(d))
+                            .attr("x2", d => x(d))
+                            .attr("y1", 0.5)
+                            .attr("y2", height));
+            }
+
+            // Faire la pyramide par défaut
+            updatePyramid(filtData(data, 2020))
+
+            // Attach event listeners to the radio buttons
+            document.querySelectorAll('input[name="year"]').forEach(radio => {
+                radio.addEventListener('change', (event) => {
+                    const selectedYear = event.target.value === "2022" ? 2020 : "2050_moy";
+                    updatePyramid(filtData(data, selectedYear));
+                });
+            });
+        });
+
+
+        // Tooltip
+        const tooltip = d3.select("#container")
                               .append("div")
                               .style("opacity", 0)
                               .attr("class", "tooltip")
@@ -106,64 +181,16 @@
                               .style("font-size", "12px")
                               .style("padding", "2px")
                               .style("border-radius", "5px");
-
-            // Ajouter les barres de données
-            svg.append("g")
-               .selectAll("rect")
-               .data(data)
-               .enter()
-               .append("rect")
-               .attr("fill", d => color(d.sexe))
-               .attr("x", x(0))
-               .attr("y", d => y(d.age))
-               .attr("height", y.bandwidth())
-               .attr("width", 0)
-               .attr("fill-opacity", 0.8)
-               .on("mouseover", (e, d) => {
-                   d3.select(e.currentTarget).attr("fill-opacity", 1);    
-                   tooltip.style("opacity", 1);        
-               })
-               .on("mousemove", (e, d) => {
-                   const [mx, my] = d3.pointer(e); // Obtenir les coordonnées de la souris
-                   tooltip.html(`${sepMilliers(Math.abs(d.nombre))} ${sexeEnToutesLettres(d.sexe)} ${ageEnTexte(d.age)}`)
-                          .style("left", `${mx + 5}px`)
-                          .style("top", `${my + 50}px`);
-               })
-               .on("mouseout", (e, d) => {
-                   d3.select(e.currentTarget).attr("fill-opacity", 0.8);
-                   tooltip.style("opacity", 0); 
-               })
-               .transition()
-               .duration(2000)
-               .attr("width", d => Math.abs(x(d.nombre) - x(0))) // Longueur finale
-               .attr("x", d => x(Math.max(d.nombre, 0))); // Position finale
-
-            // Grille pour l'axe Y
-            svg.append("g")
-               .attr("stroke", "black")
-               .attr("stroke-opacity", 0.1)
-               .call(g => g.append("g")
-                           .selectAll("line")
-                           .data(d3.range(0, 100, 10))
-                           .join("line")
-                           .attr("y1", d => y(d) + y.step() / 2)
-                           .attr("y2", d => y(d) + y.step() / 2)
-                           .attr("x1", 0)
-                           .attr("x2", width));
-
-            // Grille pour l'axe X
-            svg.append("g")
-               .attr("stroke", "white")
-               .attr("stroke-opacity", 0.5)
-               .call(g => g.append("g")
-                           .selectAll("line")
-                           .data(x.ticks().filter((v, i) => v % 1000 == 0).slice(1, -1))
-                           .join("line")
-                           .attr("x1", d => x(d))
-                           .attr("x2", d => x(d))
-                           .attr("y1", 0.5)
-                           .attr("y2", height));
-        });
+        
+        function filtData(data, annee) {
+            return data.filter(d => d.AN == annee)
+                       .map(d => ({
+                            sexe: +d.SEX === 1 ? "H" : "F",
+                            age: +d.AGE,
+                            nombre: +d.SEX === 1 ? +d.pop : -d.pop // Négatif pour le côté droit
+                            })
+            );
+        }
 
         // Retourne le sexe en toutes lettres
         function sexeEnToutesLettres(sex_abrev) {
@@ -175,7 +202,7 @@
             switch (age) {
                 case 0: return "dans leur 1<sup>e</sup> année";
                 case 1: return "d'une année";
-                case 99: return "de 99 ans et plus";
+                case 100: return "de 100 ans et plus";
                 default: return `de ${age} ans`;
             }
         }
