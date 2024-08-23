@@ -22,7 +22,7 @@ Les cartes de [densité](./carte_densite.html) et d'[évolution de la population
 
 La "pyramide" des âges est un type de graphique moins fréquent et a été inclus pour montrer le résultat de la projection démographique réalisée pour le canton du Valais. Là aussi l'interactivité permet de connaître, pour chaque tranche d'âge, les valeurs exactes. On pourrait également penser inclure dans la même visualisation la différence entre la projection et l'état actuel (ou d'autres différences), animer l'évolution sur plusieurs années et ainsi voir la pyramide onduler.
 
-Le graphique de l'[utilisation du sol](./oc_sol.html) est une petite évolution avec l'utilisation plus "classique" (mais assez décriée) du _pie chart_. Ici l'interactivité permet d'inclure les données de l'agriculture directement dans un "sous-treemap" qui pourrait être étendu aux autres grandes catégories (ce que le format A6 de la publication ne permet pas).
+Le graphique de l'[utilisation du sol](./oc_sol.html) est une petite évolution avec l'utilisation d'un _treemap_ plutôt que d'un _pie chart_. Ici l'interactivité permet d'inclure les données de l'agriculture directement dans un "sous-treemap" qui pourrait être étendu aux autres grandes catégories (ce que le format A6 de la publication ne permet pas). On se heurte toutefois au même problème que la publication physique pour l'inclusion de labels hors _tooltip_. De plus, la visualisation paraît un peu vide vu qu'il n'y a qu'un sous-domaine qui est détaillé et que c'est un des plus petits. Le résultat final n'est donc pas très convaincant dans sa forme actuelle.
 
 Le graphique des [exportations](./exportations.html) permet de voir les partenaires privilégiés au niveau des exportations. Un graphique alternatif aurait été de faire un graphique "de Sankey"/alluvial pour montrer comment se répartissent les plus gros secteurs d'exportations dans les plus grosses destinations d'export. Toutefois, le graphique est vite encombré et les symboles proportionnels sont assez intuitifs (même s'ils demandent de connaître les drapeaux représentés). Là encore, l'interactivité permet d'apporter cette information ainsi qu'un peu d'animation, mais le type de graphique pourrait être intégralement repensé.
 
@@ -40,8 +40,11 @@ Les drapeaux pour les exportations sont issus du repo suivant : [https://github.
 
 ### Améliorations potentielles
 
-- Ajouter une échelle aux cartes
-- L'axe à zéro pour la pyramide des âges
+- Cartes : Ajouter une échelle
+- Pyramides des âges : l'axe à zéro est décalé (valeur en milieu d'axe)
+- Treemap :
+  - Insérer des labels dans les rectangles (pas optimal)
+  - Ajouter des autres informations sur les types de surfaces
 
 ### Contexte de développement
 

@@ -33,8 +33,6 @@ Promise.all([
         };
     })
 ]).then(([data_ocsol, data_sau]) => {
-    console.log(data_ocsol);
-    console.log(data_sau);
 
     // Dimensions et marges
     const marginTop = 0;
@@ -121,15 +119,47 @@ Promise.all([
             } else {
                 return surf_colors[d.data.oc_sol]
             }
-        });
+        })
+        .on("mouseover", (e, d) => {
 
-// TODO : mettre un bord foncé lors de la sélection
-// TODO : tooltip
+            d3.selectAll("rect")
+              .filter(function() {
+                    return this !== e.currentTarget; 
+              })
+              .attr("fill-opacity", 0.9);
+
+            d3.select(e.currentTarget)
+              .attr("stroke", "black")
+              .attr("stroke-width", 2.5);    
+            tooltip.style("opacity", 1);        
+        })
+        .on("mousemove", (e, d) => {
+            const [mx, my] = d3.pointer(e); // Obtenir les coordonnées de la souris
+            tooltip.html(`${d.data.oc_sol} : ${Math.round(d.data.ha / 100)}km<sup>2</sup>`)
+                    .style("left", `${e.clientX + 10}px`)
+                    .style("top", `${e.clientY - 20}px`);
+        })
+        .on("mouseout", (d) => {
+            d3.selectAll("rect")
+              .attr("fill-opacity", 1)
+              .attr("stroke-width", 0);
+
+            tooltip.style("opacity", 0);   
+        })
+
+    // Tooltip
+    const tooltip = d3.select("#container")
+                    .append("div")
+                    .style("opacity", 0)
+                    .attr("class", "tooltip")
+                    .style("background-color", "white")
+                    .style("position", "absolute")
+                    .style("font-size", "12px")
+                    .style("padding", "2px")
+                    .style("border-radius", "5px")
+                    .style("font-family", "sans")
+
 // TODO (évtl) : labels, mais compliqué
-
 });
-
-
 </script>
-
 </body>
