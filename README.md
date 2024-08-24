@@ -52,6 +52,7 @@ Les drapeaux pour les exportations sont issus du repo suivant : [https://github.
   - Il faudrait standardiser l'aspect ratio des drapeaux pour éviter d'avoir des cas comme le Japon qui ressemble plus à l'oeil de Sauron qu'à un drapeau ou le Canada qui n'est plus qu'une feuille d'érable.
   - Résoudre le problème des drapeaux blancs (DK, SK, SE)
   - Ajouter le nom court des pays plutôt que le code ISO
+- Barres / Sources du chauffage : Insérer le label en bout de barre à l'exemple de la publication physique
 
 ### Contexte de développement
 
