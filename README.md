@@ -36,6 +36,9 @@ Le travail est réalisé à l'aide de [D3.js](https://d3js.org/), une librairie 
 
 L'idée de la page d'accueil vient de la "galerie" D3 visible sur [Observable](https://observablehq.com/@d3/gallery).
 
+Une partie du code pour le graphique des exportations a été reprise et adaptée du projet d3-country-bubble-chart
+de jeffreymorganio (https://github.com/jeffreymorganio/d3-country-bubble-chart/)
+
 Les drapeaux pour les exportations sont issus du repo suivant : [https://github.com/fonttools/region-flags](https://github.com/fonttools/region-flags). Les informations complémentaires sont disponibles dans le dossier `/flags`.
 
 ### Améliorations potentielles
@@ -45,6 +48,10 @@ Les drapeaux pour les exportations sont issus du repo suivant : [https://github.
 - Treemap :
   - Insérer des labels dans les rectangles (pas optimal)
   - Ajouter des autres informations sur les types de surfaces
+- Drapeaux/Exportations : 
+  - Il faudrait standardiser l'aspect ratio des drapeaux pour éviter d'avoir des cas comme le Japon qui ressemble plus à l'oeil de Sauron qu'à un drapeau ou le Canada qui n'est plus qu'une feuille d'érable.
+  - Résoudre le problème des drapeaux blancs (DK, SK, SE)
+  - Ajouter le nom court des pays plutôt que le code ISO
 
 ### Contexte de développement
 

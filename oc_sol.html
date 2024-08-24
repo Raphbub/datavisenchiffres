@@ -134,7 +134,6 @@ Promise.all([
             tooltip.style("opacity", 1);        
         })
         .on("mousemove", (e, d) => {
-            const [mx, my] = d3.pointer(e); // Obtenir les coordonnées de la souris
             tooltip.html(`${d.data.oc_sol} : ${Math.round(d.data.ha / 100)}km<sup>2</sup>`)
                     .style("left", `${e.clientX + 10}px`)
                     .style("top", `${e.clientY - 20}px`);
