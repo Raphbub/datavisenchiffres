@@ -41,6 +41,8 @@ de jeffreymorganio (https://github.com/jeffreymorganio/d3-country-bubble-chart/)
 
 Les drapeaux pour les exportations sont issus du repo suivant : [https://github.com/fonttools/region-flags](https://github.com/fonttools/region-flags). Les informations complémentaires sont disponibles dans le dossier `/flags`.
 
+Pour comprendre l'animation des lignes : https://jakearchibald.com/2013/animated-line-drawing-svg/
+
 ### Améliorations potentielles
 
 - Cartes : Ajouter une échelle
@@ -53,6 +55,9 @@ Les drapeaux pour les exportations sont issus du repo suivant : [https://github.
   - Résoudre le problème des drapeaux blancs (DK, SK, SE)
   - Ajouter le nom court des pays plutôt que le code ISO
 - Barres / Sources du chauffage : Insérer le label en bout de barre à l'exemple de la publication physique
+- Lignes / Nuitées : 
+  - Labelisation directe
+  - Formater les axes avec une espace fine pour les milliers
 
 ### Contexte de développement
 
