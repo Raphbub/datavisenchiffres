@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h3>Structure par âge de la population</h3> 
+    <h3>Structure par âge de la population</h3>
     <input type="radio" id="radio2022" name="year" value="2022" checked>
     <label for="radio2022">2022</label><br>
 
@@ -133,7 +133,7 @@
 
                 // Mettre à jour
                 bars.transition()
-                    .duration(2000)
+                    .duration(3000)
                     .attr("width", d => Math.abs(x(d.nombre) - x(0))) 
                     .attr("x", d => x(Math.max(d.nombre, 0)));
 

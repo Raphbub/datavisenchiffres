@@ -46,7 +46,9 @@ Pour comprendre l'animation des lignes : https://jakearchibald.com/2013/animated
 ### Améliorations potentielles
 
 - Cartes : Ajouter une échelle
-- Pyramides des âges : l'axe à zéro est décalé (valeur en milieu d'axe)
+- Pyramides des âges :
+  - L'axe à zéro est décalé (valeur en milieu d'axe)
+  - La transition pour se faire de manière à ce que les barres des années montent pour passer de 2022 à 2050 (une sorte d'ondulation vers le haut)
 - Treemap :
   - Insérer des labels dans les rectangles (pas optimal)
   - Ajouter des autres informations sur les types de surfaces
