@@ -2,18 +2,7 @@
 <head>
     <title>Chauffage logements</title>
     <script src="libs/d3.v7.js"></script>
-    <style>
-      h3 {
-          margin-bottom: 10px;
-          margin-left: 20px;
-          font-family: Arial, Helvetica, sans-serif;
-      }
-      .tooltip {
-          font-size: 11px;
-          position: absolute;
-          font-family: Arial, Helvetica, sans-serif;
-      }
-  </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <h3>Logements selon la source d'énergie du chauffage</h3>    
@@ -62,6 +51,8 @@ d3.csv("data/graph_src_chauffage.csv", d => {
     .range([0, height])
     .padding(0.1);
 
+  let formatWithComma = d3.format(",.0f");
+
   // Ajouter les barres
   let bars = svg.selectAll(".bar")
     .data(data)
@@ -78,7 +69,7 @@ d3.csv("data/graph_src_chauffage.csv", d => {
         .attr("fill", "#1883a3");
     })      
     .on("mousemove", function(e,d) {
-        toolt.html(`<b>${d.a2022}</b>`)
+        toolt.html(`<b>${formatWithComma(d.a2022).replace(/,/g, "\u2009")}</b>`)
              .style("left", `${e.pageX + 20}px`)
              .style("top", `${e.pageY}px`);
     })
