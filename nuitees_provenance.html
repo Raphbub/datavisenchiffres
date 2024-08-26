@@ -2,9 +2,15 @@
 <head>
     <title>Nuitées selon provenance</title>
     <script src="libs/d3.v7.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h3>Nuitées selon la provenance des hôtes</h3>    
+<h3>Nuitées selon la provenance des hôtes</h3>
+<h5>
+  <span style="color: #DC0018; font-weight: bold;">Suisse</span>, 
+  <span style="color: #728cd7; font-weight: bold;">Europe</span> et 
+  <span style="color: #777777; font-weight: bold;">Reste du monde</span>
+</h5>
 
 <div id="container"></div>
 <!-- <script type="module"> -->
@@ -96,23 +102,35 @@ d3.csv("data/graph_nuitees_tidy.csv").then(data => {
   const groupes = d3.groups(graph_data, d => d.continent);
 
   // Ajouter les lignes
-  svg.selectAll(".line")
+  // Animation de la ligne grâce notamment à
+  // https://stackoverflow.com/questions/13893127/how-to-draw-a-path-smoothly-from-start-point-to-end-point-in-d3-js
+  // https://jakearchibald.com/2013/animated-line-drawing-svg/
+  let paths = svg.selectAll(".line")
     .data(groupes)
     .enter().append("path")
     .attr("class", "line")
     .attr("d", d => line(d[1])) // d[1] pour avoir les données
     .style("stroke", d => cont_colors[d[0]]) // d[0] pour le nom de groupe (continent)
     .style("fill", "none")
-    .style("stroke-width", 2);
+    .style("stroke-width", 2)
+    .attr("stroke-dasharray", function() {
+        const totalLength = this.getTotalLength();
+        return `${totalLength} ${totalLength}`;
+    })
+    .attr("stroke-dashoffset", function() {
+        return this.getTotalLength();
+    });
 
-  // TODO : faire grandir la ligne
-  // TODO : tooltip
-  // TODO : légende (ligne nommée)
-
+  // "Construire" les lignes
+  paths.transition()
+  .duration(2500)
+  .ease(d3.easeLinear)
+  .attr("stroke-dashoffset", 0);
+  
   // Axe X
   svg.append("g")
   .attr("transform", `translate(0,${height})`)
-  .call(d3.axisBottom(x))
+  .call(d3.axisBottom(x).tickSizeOuter(0))
   .selectAll("text")
   .style("text-anchor", "middle");
 
@@ -120,9 +138,78 @@ d3.csv("data/graph_nuitees_tidy.csv").then(data => {
   svg.append("g")
     .attr("class", "y-axis")
     .call(d3.axisLeft(y));
+  
+  // Formatage des valeurs
+  let formatWithComma = d3.format(",.0f");
+  
+  // Overlay sur le graphique pour les events de souris
+  let overlay = svg.append("rect")
+  .attr("width", width)
+  .attr("height", height)
+  .style("fill", "none")
+  .style("pointer-events", "all");
+
+  // "Point" où est la donnée la plus proche de la souris (=du mois) sur la ligne
+  let valMensPt = svg.selectAll(".dataPoint")
+    .data(groupes)
+    .enter().append("circle")
+    .attr("class", "dataPoint")
+    .attr("r", 2)
+    .attr("fill", d => cont_colors[d[0]])
+    .style("opacity", 0);
+
+  // Fonds des nombres
+  let valMensBckG = svg.selectAll(".valueBackground")
+    .data(groupes)
+    .enter().append("rect")
+    .attr("class", "valueBackground")
+    .attr("fill", "white")
+    .attr("rx", 5)
+    .attr("ry", 5)
+    .attr("opacity", 0.95);
+
+  // Nombres
+  let valMensNb = svg.selectAll(".valueText")
+    .data(groupes)
+    .enter().append("text")
+    .attr("class", "valueText")
+    .attr("fill", d => cont_colors[d[0]])
+    .attr("text-anchor", "middle")
+    .attr("font-family", "sans")
+    .attr("font-size", "12px")
+    .attr("font-weight", "bold"); 
+
+  // Faire apparaître les infos
+  overlay.on("mousemove", function(event) {
+    let mouseX = d3.pointer(event, this)[0];
+    // Généré avec l'aide de ChatGPT 4o : How can I find the closest point to a mouseX when I have a bandScale in d3.js
+    let moisIndex = Math.round((mouseX - x.bandwidth() / 2) / x.step());
+
+    // N'afficher les valeurs que pour les mois (avec données) existants
+    if (moisIndex >= 0 && moisIndex < 12) {
+      valMensNb.attr("x", d => x(d[1][moisIndex].mois) + x.bandwidth() / 2)
+               .attr("y", d => y(d[1][moisIndex].nuitees) - 5)
+               .text(d => formatWithComma(d[1][moisIndex].nuitees).replace(/,/g, "\u2009")) // Changer le séparateur des milliers
+               .style("opacity", 1);
+            
+      valMensBckG.attr("x", d => x(d[1][moisIndex].mois) + x.bandwidth() / 2 - 15)
+                 .attr("y", d => y(d[1][moisIndex].nuitees) - 17)
+                 .attr("width", 35)
+                 .attr("height", 15)
+                 .style("opacity", 1);
+
+      valMensPt.attr("cx", d => x(d[1][moisIndex].mois) + x.bandwidth() / 2)
+               .attr("cy", d => y(d[1][moisIndex].nuitees))
+               .style("opacity", 1);
+    }
+  })
+  .on("mouseout", function() {
+    // Faire disparaître quand la souris n'est plus sur l'overlay du graphique
+    valMensNb.style("opacity", 0);
+    valMensBckG.style("opacity", 0);
+    valMensPt.style("opacity", 0);
+  });
 });
-
-
 </script>
 
 </body>
