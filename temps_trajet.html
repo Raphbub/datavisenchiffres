@@ -5,33 +5,55 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
-<h3>Temps de trajet journalier moyen</h3>
-
 <div id="container"></div>
 <script>
 
-    // Set dimensions for the clock
-    const width = 300;
-    const height = 300;
+/* Ce script a été construit en grande partie par un dialogue avec ChatGPT 3.5 et 4o plus récemment
+   et des ajustements très réguliers pour obtenir qqch de fonctionnel. Les parties 
+   utilisées plus ou moins directement sont mentionnées telles quelles 
+   Les liens suivants ont également été utilisés :
+   - https://observablehq.com/@d3/simple-clock
+   - https://observablehq.com/@drio/lets-build-an-analog-clock */
+
+
+
+// Pour enregistrer les horloges
+const clocks = [];
+
+// Création d'une horloge dans un container, avec h, l, place dans le svg et label du type
+function createClock(container, width, height, x, y, label) {
     const radius = Math.min(width, height) / 2;
+
+    // Créer un svg par horloge
+    const svg = container.append("svg")
+                         .attr("width", width)
+                         .attr("height", height + 30) // Décaler pour le label
+                         .style("position", "absolute")
+                         .style("left", `${x}px`)
+                         .style("top", `${y}px`);
     
-    // Create SVG container
-    const svg = d3.select("#container")
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .append("g")
-        .attr("transform", `translate(${width / 2}, ${height / 2})`);
+    //  Label au-dessus de l'horloge
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", 20)
+        .attr("text-anchor", "middle")
+        .attr("font-family", "Arial")
+        .attr("font-size", "16px")
+        .attr("fill", "#262626")
+        .text(label);
+
+    // Ajouter un groupe au centre du svg
+    const g = svg.append("g")
+                 .attr("transform", `translate(${width / 2}, ${(height + 30) / 2 + 10})`);
     
-    // Draw clock face
-    svg.append("circle")
+    // Contour horloge
+    g.append("circle")
         .attr("r", radius)
         .attr("fill", "none")
-        .attr("stroke", "black")
+        .attr("stroke", "#4c4c4c")
         .attr("stroke-width", 1);
 
-    // Draw hour ticks
+    // Marques des heures
     const hourTicks = d3.range(0, 12).map(d => {
         return {
             angle: (d / 12) * 2 * Math.PI,
@@ -42,7 +64,7 @@
         };
     });
 
-    svg.selectAll(".hour-tick")
+    g.selectAll(".hour-tick")
         .data(hourTicks)
         .enter()
         .append("line")
@@ -51,10 +73,10 @@
         .attr("y1", d => d.y1)
         .attr("x2", d => d.x2)
         .attr("y2", d => d.y2)
-        .attr("stroke", "black")
-        .attr("stroke-width", 3);
+        .attr("stroke", "#4c4c4c")
+        .attr("stroke-width", 2);
 
-    // Draw minute ticks
+    // Marques des minutes
     const minuteTicks = d3.range(0, 60).filter(d => d % 5 !== 0).map(d => {
         return {
             angle: (d / 60) * 2 * Math.PI,
@@ -65,7 +87,7 @@
         };
     });
 
-    svg.selectAll(".minute-tick")
+    g.selectAll(".minute-tick")
         .data(minuteTicks)
         .enter()
         .append("line")
@@ -74,83 +96,99 @@
         .attr("y1", d => d.y1)
         .attr("x2", d => d.x2)
         .attr("y2", d => d.y2)
-        .attr("stroke", "black")
+        .attr("stroke", "#4c4c4c")
         .attr("stroke-width", 1);
 
-    // Add path for minute hand fill
-    function createFillPath() {
-        return svg.append("path")
-            .attr("class", "minute-fill")
-            .attr("fill", "rgba(0, 0, 255, 0.2)");
+    // Ajouter le svg et rayon dans les horloges
+    clocks.push({ svg: g, radius });
+}
+
+// Initialiser l'horloge et ajouter un polygone de couleur pour le fill
+function initClock(clock, color) {
+    // Récupérer le rayon
+    const radius = clock.radius;
+
+    // Enlever les éventuels éléments de temps présents
+    clock.svg.selectAll(".hour-hand, .minute-hand, .minute-fill").remove();
+
+    // Dessiner l'aiguille des heures
+    clock.svg.append("line")
+        .attr("class", "hour-hand")
+        .attr("x1", 0)
+        .attr("y1", 0)
+        .attr("x2", 0)
+        .attr("y2", -radius * 0.5)
+        .attr("stroke", "black")
+        .attr("stroke-width", 3)
+        .attr("stroke-linecap", "round")
+        .attr("transform", `rotate(0)`);
+
+    // Dessiner l'aiguille des minutes
+    clock.svg.append("line")
+        .attr("class", "minute-hand")
+        .attr("x1", 0)
+        .attr("y1", 0)
+        .attr("x2", 0)
+        .attr("y2", -radius * 0.7)
+        .attr("stroke", "black")
+        .attr("stroke-width", 2.25)
+        .attr("stroke-linecap", "round")
+        .attr("transform", `rotate(0)`);
+
+    // Ajouter un petit "bouton" à la jointure des aiguilles
+    clock.svg.append("circle")
+        .attr("class", "center-circle")
+        .attr("cx", 0)
+        .attr("cy", 0)
+        .attr("r", 2.5)
+        .attr("fill", "black");
+
+    // Ajouter le path de couleur
+    clock.currentFillPath = createFillPath(clock, color);
+    clock.previousMinuteAngle = 0;
+    clock.fillColor = color;
+}
+
+// Créer un fill path pour marquer le temps couvert d'une certaine couleur
+function createFillPath(clock, color) {
+    return clock.svg.append("path")
+        .attr("class", "minute-fill")
+        .attr("fill", color)
+        .attr("d", "");
+}
+
+// Ajuster le fill path selon les angles
+function updateFillPath(fillPath, startAngle, endAngle, radius, from0 = false) {
+    // Savoir s'il faut dessiner un cercle "contenu" ou non
+    let largeArcFlag = endAngle - startAngle > Math.PI ? 1 : 0;
+    // let largeArcFlag = Math.abs(endAngle - startAngle) > Math.PI ? 1 : 0;
+    const startX = radius * Math.sin(startAngle);
+    const startY = -radius * Math.cos(startAngle);
+    const endX = radius * Math.sin(endAngle);
+    const endY = -radius * Math.cos(endAngle);
+
+    // Ajout pour contrer le "faux" calcul du flag quand on continue le cercle après 0
+    if (from0) {
+        largeArcFlag = 0;
     }
 
-    // Initialize variables to store previous state
-    let previousMinuteAngle = 0;
-    let currentFillPath = null;
-    
-    // Function to initialize clock at 0:00
-    function initClock() {
-        svg.selectAll(".hour-hand, .minute-hand, .minute-fill").remove();
+    // Créer les coordonnées du path
+    fillPath.attr("d", `M 0,0 L ${startX},${startY} A ${radius},${radius} 0 ${largeArcFlag},1 ${endX},${endY} Z`);
+}
 
-        // Draw hour hand at 0:00
-        svg.append("line")
-            .attr("class", "hour-hand")
-            .attr("x1", 0)
-            .attr("y1", 0)
-            .attr("x2", 0)
-            .attr("y2", -radius * 0.5)
-            .attr("stroke", "black")
-            .attr("stroke-width", 3.5)
-            .attr("stroke-linecap", "round")
-            .attr("transform", `rotate(0)`);
+// Déplacer les aiguilles et la surface d'une horloge, à partir de 0 ou de la position actuelle
+function runClock(clock, minutes, fromCurrentPosition = false, color) {
+    // Définir les temps de transition
+    const transitionDuration = minutes * 90;
+    const transDurationPath = (minutes > 60) ? transitionDuration / 90 * 60 : transitionDuration;
 
-        // Draw minute hand at 0:00
-        svg.append("line")
-            .attr("class", "minute-hand")
-            .attr("x1", 0)
-            .attr("y1", 0)
-            .attr("x2", 0)
-            .attr("y2", -radius * 0.7)
-            .attr("stroke", "black")
-            .attr("stroke-width", 3)
-            .attr("stroke-linecap", "round")
-            .attr("transform", `rotate(0)`);
+    let startHourAngle = 0;
+    let startMinuteAngle = 0;
 
-        svg.append("circle")
-            .attr("class", "center-circle")
-            .attr("cx", 0)
-            .attr("cy", 0)
-            .attr("r", 4.5)
-            .attr("fill", "black");
-
-        // Initial fill path
-        currentFillPath = createFillPath();
-        previousMinuteAngle = 0;
-    }
-
-    // Function to update the fill path based on the angle
-    function updateFillPath(fillPath, startAngle, endAngle) {
-        const largeArcFlag = endAngle - startAngle > Math.PI ? 1 : 0;
-        const startX = radius * Math.sin(startAngle);
-        const startY = -radius * Math.cos(startAngle);
-        const endX = radius * Math.sin(endAngle);
-        const endY = -radius * Math.cos(endAngle);
-        
-        fillPath.attr("d", `M 0,0 L ${startX},${startY} A ${radius},${radius} 0 ${largeArcFlag},1 ${endX},${endY} Z`);
-    }
-    
-    // Function to move the clock hands according to the given number of minutes
-    function runClock(minutes, fromCurrentPosition) {
-        const transitionDuration = minutes * 90;
-
-        let startHourAngle = 0;
-        let startMinuteAngle = 0;
-
-        if (fromCurrentPosition) {
-            // Calculate the current angles of the hands
-            const currentHourTransform = svg.selectAll(".hour-hand").attr("transform");
-            const currentMinuteTransform = svg.selectAll(".minute-hand").attr("transform");
-            previousFillPath = svg.select(".minute-fill:last-of-type");
+    // Récupérer les infos si on continue depuis l'ancien
+    if (fromCurrentPosition) {
+        const currentHourTransform = clock.svg.selectAll(".hour-hand").attr("transform");
+        const currentMinuteTransform = clock.svg.selectAll(".minute-hand").attr("transform");
         
         if (currentHourTransform) {
             startHourAngle = parseFloat(currentHourTransform.match(/rotate\(([-\d.]+)\)/)[1]);
@@ -158,99 +196,262 @@
         
         if (currentMinuteTransform) {
             startMinuteAngle = parseFloat(currentMinuteTransform.match(/rotate\(([-\d.]+)\)/)[1]);
-            previousMinuteAngle = startMinuteAngle;
+            clock.previousMinuteAngle = startMinuteAngle;
         }
     }
 
-        const hours = Math.floor(minutes / 60);
-        const remainingMinutes = minutes % 60;
+    // Calculer et convertir les éléments pour les angles
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
 
-        const hourAngle = startHourAngle + (hours + remainingMinutes / 60) * 30; // 360 / 12
-        const minuteAngle = startMinuteAngle + remainingMinutes * 6; // 360 / 60
+    const hourAngle = startHourAngle + (hours + remainingMinutes / 60) * 30;
+    const minuteAngle = startMinuteAngle + remainingMinutes * 6;
 
-        const fullTurns = Math.floor(minutes / 60);
-        const finalMinuteAngle = minuteAngle + (360 * fullTurns);
-       
-        // Update hour hand with transition
-        svg.selectAll(".hour-hand")
-            .transition()
-            .ease(d3.easeLinear)
-            .duration(transitionDuration)
-            .attrTween("transform", function() {
-                const interpolate = d3.interpolateNumber(startHourAngle, hourAngle);
-                return function(t) {
-                    return `rotate(${interpolate(t)})`;
-                };
-            });
+    const fullTurns = Math.floor(minutes / 60);
+    const endMinuteAngle = minuteAngle * Math.PI / 180;
 
-        // Update minute hand with transition
-        svg.selectAll(".minute-hand")
-            .transition()
-            .ease(d3.easeLinear)
-            .duration(transitionDuration)
-            .attrTween("transform", function() {
-                const interpolate = d3.interpolateNumber(startMinuteAngle, minuteAngle + (360 * Math.floor(minutes / 60)));
-                return function(t) {
-                    return `rotate(${interpolate(t)})`;
-                };
+    // Faire tourner l'aiguille des heures
+    const hourHandTransition = clock.svg.selectAll(".hour-hand")
+        .transition()
+        .ease(d3.easeLinear)
+        .duration(transitionDuration)
+        .attrTween("transform", function() {
+            const interpolate = d3.interpolateNumber(startHourAngle, hourAngle);
+            return function(t) {
+                return `rotate(${interpolate(t)})`;
+            };
         });
-        
-        // Create and update fill paths
-        let startAngle = 0;
-        let newFillPathCreated = false;
-        for (let i = 0; i <= fullTurns; i++) {
-            let endAngle = i < fullTurns ? Math.PI * 2 : (minuteAngle * Math.PI / 180);
-            
-            if (i === fullTurns) {
-                // Continue with the current fill path
-                const fillPath = currentFillPath;
-                fillPath
-                    .transition()
-                    .ease(d3.easeLinear)
-                    .duration(transitionDuration)
-                    .attrTween("d", function() {
-                        const interpolate = d3.interpolateNumber(previousMinuteAngle * Math.PI / 180, endAngle);
-                        return function(t) {
-                            const currentEndAngle = interpolate(t);
-                            updateFillPath(fillPath, 0, currentEndAngle);
-                            return fillPath.attr("d");
-                        };
-                    });
-            } else {
-                // Create a new fill path for each full turn
-                const fillPath = createFillPath();
-                fillPath
-                    .transition()
-                    .ease(d3.easeLinear)
-                    .duration(transitionDuration)
-                    .attrTween("d", function() {
-                        const interpolate = d3.interpolateNumber(startAngle, endAngle);
-                        return function(t) {
-                            const currentEndAngle = interpolate(t);
-                            updateFillPath(fillPath, 0, currentEndAngle);
-                            return fillPath.attr("d");
-                        };
-                    });
-                newFillPathCreated = true;
-            }
+
+    // Faire tourner l'aiguille des minutes
+    const minuteHandTransition = clock.svg.selectAll(".minute-hand")
+        .transition()
+        .ease(d3.easeLinear)
+        .duration(transitionDuration)
+        .attrTween("transform", function() {
+            const interpolate = d3.interpolateNumber(startMinuteAngle, minuteAngle + (360 * fullTurns));
+            return function(t) {
+                return `rotate(${interpolate(t)})`;
+            };
+        });
+
+    // Récupérer le fill path de l'horloge
+    let currentFillPath = clock.currentFillPath;
+    
+    // S'il y a plus d'une heure, il faut rajouter plusieurs fill path
+    if (fullTurns > 0) {
+        if (currentFillPath) {
+            currentFillPath
+                .transition()
+                .ease(d3.easeLinear)
+                .duration(transDurationPath / (fullTurns + 1))
+                .attrTween("d", function() {
+                    const interpolate = d3.interpolateNumber(clock.previousMinuteAngle * Math.PI / 180, Math.PI * 2);
+                    return function(t) {
+                        const currentEndAngle = interpolate(t);
+                        updateFillPath(currentFillPath, 0, currentEndAngle, clock.radius);
+                        return currentFillPath.attr("d");
+                    };
+                });
         }
 
-        // Update current fill path and previous minute angle for the next run
-        if (newFillPathCreated) {
-            currentFillPath = createFillPath();
-            previousMinuteAngle = 0;
-        } else {
-            previousMinuteAngle = minuteAngle;
+        // Un par tour additionnel
+        for (let i = 1; i <= fullTurns; i++) {
+            const fillPath = createFillPath(clock, color);
+            fillPath
+                .transition()
+                .ease(d3.easeLinear)
+                .duration(transitionDuration / fullTurns)
+                .attrTween("d", function() {
+                    const interpolate = d3.interpolateNumber(0, Math.PI * 2);
+                    return function(t) {
+                        const currentEndAngle = interpolate(t);
+                        updateFillPath(fillPath, 0, currentEndAngle, clock.radius);
+                        return fillPath.attr("d");
+                    };
+                });
+
+            // Mettre à jour le fill path en cours
+            clock.currentFillPath = fillPath;
+        }
+
+    }
+
+    // S'il reste des minutes, mettre à jour le fill path avec
+    if (remainingMinutes > 0) {
+        const previousAngleInRadians = clock.previousMinuteAngle * Math.PI / 180;
+        
+        // S'il y a une transition d'un côté à l'autre du 0
+        if (clock.previousMinuteAngle < 360 && minuteAngle >= 360) {
+
+            // Calculer les minutes et temps de transition
+            const minutesPastZero = remainingMinutes - (60 - (clock.previousMinuteAngle / 6))
+            const firstStepDuration = (60 - (clock.previousMinuteAngle / 6)) * 90;
+            const remainingDuration = minutesPastZero * 90;
+
+            // Compléter le fill path jusqu'à 0
+            currentFillPath
+                .transition()
+                .ease(d3.easeLinear)
+                .duration(firstStepDuration)
+                .attrTween("d", function() {
+                    const interpolate = d3.interpolateNumber(previousAngleInRadians, Math.PI * 2);
+                    return function(t) {
+                        const currentEndAngle = interpolate(t);
+                        updateFillPath(currentFillPath, 0, currentEndAngle, clock.radius);
+                        return currentFillPath.attr("d");
+                    };
+                })
+                // Une fois la première étape faite, compléter du 0 à l'autre côté dans un nouveau fill path
+                .on("end", function() {
+                    const newFillPath = createFillPath(clock, color);
+                    newFillPath
+                        .transition()
+                        .ease(d3.easeLinear)
+                        .duration(remainingDuration)
+                        .attrTween("d", function() {
+                            const interpolate = d3.interpolateNumber(0, minutesPastZero * 6 * Math.PI / 180);
+                            return function(t) {
+                                const currentEndAngle = interpolate(t);
+                                updateFillPath(newFillPath, 0, currentEndAngle, clock.radius);
+                                return newFillPath.attr("d");
+                            };
+                        });
+
+                    clock.currentFillPath = newFillPath;
+                });
+        } else if (clock.previousMinuteAngle == 360 | clock.previousMinuteAngle == 0) {
+            // Si on (re)part de 0, commencer...depuis 0
+            currentFillPath
+                .transition()
+                .ease(d3.easeLinear)
+                .duration(transDurationPath / (fullTurns + 1))
+                .attrTween("d", function() {
+                    const interpolate = d3.interpolateNumber(previousAngleInRadians, endMinuteAngle);
+                    console.log(previousAngleInRadians);
+                    console.log(endMinuteAngle);
+                    return function(t) {
+                        const currentEndAngle = interpolate(t);
+                        // console.log(currentEndAngle);
+                        updateFillPath(currentFillPath, 0, currentEndAngle, clock.radius);
+                        return currentFillPath.attr("d");
+                    };
+                });
+
+            clock.currentFillPath = currentFillPath;
+        } 
+        else {
+            // Sinon reprendre depuis la dernière mesure
+            currentFillPath
+                .transition()
+                .ease(d3.easeLinear)
+                .duration(transDurationPath / (fullTurns + 1))
+                .attrTween("d", function() {
+                    const interpolate = d3.interpolateNumber(previousAngleInRadians, endMinuteAngle);
+                    console.log(previousAngleInRadians);
+                    console.log(endMinuteAngle);
+                    return function(t) {
+                        const currentEndAngle = interpolate(t);
+                        // console.log(currentEndAngle);
+                        updateFillPath(currentFillPath, 0, currentEndAngle, clock.radius, from0 = true);
+                        return currentFillPath.attr("d");
+                    };
+                });
+            // Ajuste le fill path de l'horloge
+            clock.currentFillPath = currentFillPath;
         }
     }
 
-    // Initial update
-    initClock();
-    
-    // Update clock hands every minute
-    // setInterval(updateClock, 60000);
-    
-    </script>
+    // Mettre à jour pour le prochain tour
+    clock.previousMinuteAngle = minuteAngle + (360 * fullTurns);
 
+    // Pour la synchronisation
+    return {
+        hourHandTransition,
+        minuteHandTransition
+    };
+}
+
+// Définir la variable container
+const container = d3.select("#container");
+
+// Créer la grande horloge
+createClock(container, 300, 300, 0, 0, "Temps de trajet journalier moyen total");
+
+// Créer les 4 petites
+const smallClockSize = 125;
+createClock(container, smallClockSize, smallClockSize, 350, 10, "Trsp. ind. motor."); // Top-right clock
+createClock(container, smallClockSize, smallClockSize, 350 + smallClockSize + 50, 10, "Mobilité douce"); // Top-right second clock
+createClock(container, smallClockSize, smallClockSize, 350, smallClockSize + 50, "Trsp. publics"); // Bottom-right clock
+createClock(container, smallClockSize, smallClockSize, 350 + smallClockSize + 50, smallClockSize + 50, "Autres"); // Bottom-right second clock
+
+// Les initialiser avec leur couleur respective
+initClock(clocks[0], "rgba(255, 165, 155, 0.5)");
+initClock(clocks[1], "rgba(208, 118, 185, 0.5)");
+initClock(clocks[2], "rgba(128, 204, 116, 0.5)");
+initClock(clocks[3], "rgba(104, 209, 244, 0.5)");
+initClock(clocks[4], "rgba(134, 135, 139, 0.5)");
+
+// Partiellement généré avec Chat-GPT 3.5, "how can I animate clocks two by two and make sure it is finished
+// before launching the next clocks animation ?"
+function animateClocks(clock1, clock2, minutes) {
+    return new Promise((resolve) => {
+        // La grande continue depuis le dernier arrêt
+        const transitionsClock1 = runClock(clock1, minutes, fromCurrentPosition = true, clock1.fillColor);
+        const transitionsClock2 = runClock(clock2, minutes, false, clock2.fillColor);
+
+        // Wait for both clocks to finish
+        Promise.all([
+            transitionsClock1.hourHandTransition.end(),
+            transitionsClock1.minuteHandTransition.end(),
+            transitionsClock2.hourHandTransition.end(),
+            transitionsClock2.minuteHandTransition.end()
+        ]).then(resolve);
+    });
+}
+
+// Ajouter les minutes sous le centre de l'horloge
+function addNumberToClock(clock, number, x = 0, y = 35) {
+    clock.svg.append("text")
+        .attr("class", "clock-number")
+        .attr("x", x)
+        .attr("y", y)
+        .attr("text-anchor", "middle")
+        .attr("alignment-baseline", "middle")
+        .attr("font-size", clock.radius * 0.3)
+        .attr("fill", "black")
+        .attr("font-family", "Arial") 
+        .attr("font-weight", "bold") 
+        .text(number);
+}
+
+// Animation principale
+function animateTravelTime() {
+    // TIM
+    animateClocks(clocks[0], clocks[1], 39.6)
+        // MD
+        .then(() => {
+            addNumberToClock(clocks[1], "39.6'")
+            return animateClocks(clocks[0], clocks[2], 31.7)
+        })
+        // // TP
+        .then(() => {
+            addNumberToClock(clocks[2], "31.7'", x = 20)
+            return animateClocks(clocks[0], clocks[3], 5.8)
+        })
+        // Autres
+        .then(() => {
+            addNumberToClock(clocks[3], "5.8'")
+            return animateClocks(clocks[0], clocks[4], 2.7)
+        })
+        .then(() => {
+            addNumberToClock(clocks[4], "2.7'")
+            addNumberToClock(clocks[0], "1h19.8", x = 0, y = 100)
+        })
+}
+
+setTimeout(() => {
+    animateTravelTime();
+}, 2500);
+</script>
 
 </body>
