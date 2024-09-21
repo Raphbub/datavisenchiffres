@@ -2,11 +2,15 @@
 <head>
     <title>datavisenchiffres</title>
     <script src="libs/d3.v7.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h2 style="margin-bottom: 0%; margin-left: 0.875rem; color: #ae2d57; font-family: 'Century Gothic', sans-serif;">Le Valais en chiffres et interactif</h2>
     <div id="preview-container"></div>
+    
+    <button id="butvs" onclick="window.open('https://www.vs.ch/documents/21539585/21539740/Das+Wallis+in+Zahlen+2023.pdf/ca9c4eaf-6956-3b40-8610-a7d40faea27e?t=1707999971763', '_blank')">Publication Valais en chiffres</button>
 
+    
     <script type="module">
         // Définir la liste des graphiques (même noms que .html et .png)
         const graphiques = ["carte_densite", "carte_evol_pop", "pyramides_pop", "oc_sol",

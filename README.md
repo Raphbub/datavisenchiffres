@@ -4,7 +4,11 @@
 
 Reproduction d'une sélection de graphiques du [VS en chiffres](https://www.vs.ch/documents/21539585/21539740/Das+Wallis+in+Zahlen+2023.pdf/ca9c4eaf-6956-3b40-8610-a7d40faea27e?t=1707999971763), publication papier annuelle.
 
-L'idée est de tester quelques possibilités d'interactivité afin d'"augmenter" le contenu de la brochure dans le futur. Les différentes reproductions sont ainsi plutôt sobres et orientées sur l'apprentissage et l'expérimentation des fonctionnalités. Les différents choix et améliorations sont détaillés ci-dessous dans les rubriques dédiées.
+![Capture d'écran de la page d'accueil menant aux différentes visualisations](imgs/homepage.png)
+
+L'idée est de tester quelques possibilités d'interactivité afin d'"augmenter" le contenu de la brochure dans le futur. Les différentes reproductions sont ainsi plutôt sobres et orientées sur l'apprentissage et l'expérimentation des fonctionnalités. Les différents choix et améliorations sont détaillés ci-dessous dans les rubriques dédiées. Chaque visualisation reprend le commentaire ainsi que quelques potentiels d'amélioration.
+
+![Capture vidéo de la visualisation du temps de trajet quotidien](imgs/temps_trajet.gif)
 
 #### Données
 

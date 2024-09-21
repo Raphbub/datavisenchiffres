@@ -6,6 +6,27 @@
 </head>
 <body>
 <div id="container"></div>
+
+<div style="margin-top: 400px;">
+    <h5 class="com">Commentaire et améliorations</h5>
+    <p>
+        Cette visualisation représente le temps de trajet journalier moyen au total et par mode de transport,
+        en Valais, toutes activités confondues (travail, loisirs, etc.).
+        C'est une façon plus originale de représenter une quantité qu'un simple graphique en barre.
+        Ici l'animation est un grand plus (mais a fait remonter pas mal de mauvais souvenirs liés au
+        cercle trigonométrique), car elle permet de mieux comprendre que la grande horloge représente
+        le total et qu'il est supérieur à une heure (un tour de cadran).
+        Il serait également intéressant d'y coupler la distance moyenne par type de transport
+        (qui a dû être abandonnée faute de place).
+    </p>
+    <p>
+        Pour améliorer cette visualisation, il faudrait construire la page de façon à avoir l'entièreté
+        des informations disponibles. Un texte explicatif sur ce qui est montré ou quelque chose de plus
+        construit et accompagné comme un scrollytelling pourrait valoriser le travail sur les horloges.
+    </p>
+    <button onclick="location.href='index.html'">Retour à l'accueil</button>
+    </div>
+
 <script>
 
 /* Ce script a été construit en grande partie par un dialogue avec ChatGPT 3.5 et 4o plus récemment
@@ -451,7 +472,7 @@ function animateTravelTime() {
 
 setTimeout(() => {
     animateTravelTime();
-}, 1500);
+}, 750);
 </script>
 
 </body>

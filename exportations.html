@@ -8,7 +8,27 @@
 <h3>Exportations par pays (mio CHF)</h3>    
 
 <div id="container"></div>
-<!-- <script type="module"> -->
+
+<h5 class="com">Commentaire et améliorations</h5>
+<p>
+    Ce graphique permet de voir les partenaires privilégiés du Valais dans le domaine des exportations.
+    Un graphique alternatif aurait été de faire un graphique "de Sankey"/alluvial pour montrer comment se répartissent les plus
+    gros secteurs d'exportations dans les plus grosses destinations d'export.
+    Toutefois, le graphique est vite encombré et les symboles proportionnels sont assez intuitifs
+    (même s'ils demandent de connaître les drapeaux représentés).
+    Là encore, l'interactivité permet d'apporter cette information ainsi qu'un peu d'animation,
+    mais le type de graphique pourrait être intégralement repensé.
+</p>
+<p>
+    Ce graphique possède un bon potentiel d'amélioration.
+    Il faudrait standardiser l'aspect ratio des drapeaux pour éviter les
+    cas comme le Japon (oeil de Sauron) ou le Canada (simple feuille)
+    qui sont problématiques et gênent la possibilité de reconnaître le pays.
+    Certains drapeaux s'affichent parfois en blanc (DK, SE, SK).
+    On pourrait également afficher le nom court des pays plutôt que le code ISO.
+</p>
+<button onclick="location.href='index.html'">Retour à l'accueil</button>
+
 <script>
 
 // Une partie du code a été reprise et adaptée du projet d3-country-bubble-chart
